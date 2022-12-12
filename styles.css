@@ -1,0 +1,29 @@
+@media (prefers-color-scheme: dark) {
+    :root {
+        --open-gate-background: #000;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --open-gate-background: #fff;
+    }
+}
+
+.open-gate-webview {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background-color: var(--open-gate-background);
+}
+
+.open-gate-view {
+    padding: 0 !important;
+    overflow: hidden !important;
+}
+
+.gate-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

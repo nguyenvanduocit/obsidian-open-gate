@@ -1,0 +1,14 @@
+{
+    "id": "open-gate",
+    "name": "Open Gate",
+    "version": "1.0.2",
+    "minAppVersion": "0.15.0",
+    "description": "Embed any website to Obsidian, from now all, you have anything you need in one place.",
+    "author": "duocnv",
+    "authorUrl": "https://twitter.com/duocdev",
+    "fundingUrl": {
+        "Buy Me a Coffee": "https://paypal.me/duocnguyen",
+        "Follow me": "https://twitter.com/duocdev"
+    },
+    "isDesktopOnly": true
+}
