@@ -1,5 +1,5 @@
 declare type WebviewTag = {
-    setAttribute(allowpopups: string, true1: string): void
+    setAttribute(allowpopups: string, attr: string): void
     reload(): void
     loadURL(pageUrl: string): void
     goBack(): void
@@ -12,10 +12,13 @@ declare type WebviewTag = {
     addClass(cls: string): void
 }
 
+declare type GateFrameOptionType = 'left' | 'center' | 'right'
+
 declare type GateFrameOption = {
     id: string
     icon: string
     title: string
     url: string
     hasRibbon?: boolean
+    position?: GateFrameOptionType
 }

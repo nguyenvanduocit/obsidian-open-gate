@@ -16,7 +16,7 @@ export const registerGate = (plugin: Plugin, options: GateFrameOption) => {
 
     if (options.hasRibbon) {
         plugin.addRibbonIcon(iconName, options.title, async (evt: MouseEvent) =>
-            openView(plugin.app.workspace, options.id)
+            openView(plugin.app.workspace, options.id, options.position)
         )
     }
 

@@ -32,6 +32,17 @@ export const formEditGate = (
             })
     )
 
+    new Setting(contentEl).setName('Pin to menu').addDropdown((text) =>
+        text
+            .addOption('left', 'Left')
+            .addOption('right', 'Right')
+            .addOption('center', 'Center')
+            .setValue(gateOptions.position ?? 'right')
+            .onChange(async (value) => {
+                gateOptions.position = value as GateFrameOptionType
+            })
+    )
+
     new Setting(contentEl).addButton((btn) =>
         btn
             .setButtonText(gateOptions.id ? 'Update' : 'Create')

@@ -4,6 +4,7 @@ export const createEmptyGateOption = (): GateFrameOption => {
         title: '',
         icon: 'dice',
         hasRibbon: true,
+        position: "right",
         url: ''
     }
 }
