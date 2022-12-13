@@ -23,13 +23,13 @@ const createView = (
 ) => {
     let leaf: WorkspaceLeaf | undefined
     switch (position) {
-        case "left":
+        case 'left':
             leaf = workspace.getLeftLeaf(false)
             break
-        case "center":
+        case 'center':
             leaf = workspace.getLeaf(false)
             break
-        case "right":
+        case 'right':
         default:
             leaf = workspace.getRightLeaf(false)
             break
