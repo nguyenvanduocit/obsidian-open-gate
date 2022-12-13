@@ -32,7 +32,7 @@ export const formEditGate = (
             })
     )
 
-    new Setting(contentEl).setName('Pin to menu').addDropdown((text) =>
+    new Setting(contentEl).setName('Position').addDropdown((text) =>
         text
             .addOption('left', 'Left')
             .addOption('right', 'Right')
