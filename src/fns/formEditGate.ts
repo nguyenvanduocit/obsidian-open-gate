@@ -1,4 +1,4 @@
-import { Setting } from 'obsidian'
+import { Notice, Setting } from 'obsidian'
 import { getSvgIcon } from './getSvgIcon'
 
 export const formEditGate = (
@@ -15,27 +15,23 @@ export const formEditGate = (
             })
     )
 
-    new Setting(contentEl).setName('Name')
+    new Setting(contentEl)
+        .setName('Name')
         .setDesc('Leave it blank to use the URL as the name')
         .addText((text) =>
-        text
-
-            .setValue(gateOptions.title)
-            .onChange(async (value) => {
+            text.setValue(gateOptions.title).onChange(async (value) => {
                 gateOptions.title = value
             })
-    )
+        )
 
     new Setting(contentEl)
         .setName('Icon')
         .setDesc('Leave it blank to enable auto-detect')
         .addText((text) =>
-        text
-            .setValue(gateOptions.icon)
-            .onChange(async (value) => {
+            text.setValue(gateOptions.icon).onChange(async (value) => {
                 gateOptions.icon = value
             })
-    )
+        )
 
     new Setting(contentEl).setName('Pin to menu').addToggle((text) =>
         text
@@ -60,7 +56,7 @@ export const formEditGate = (
         btn
             .setButtonText(gateOptions.id ? 'Update' : 'Create')
             .setCta()
-            .onClick(() => {
+            .onClick(async () => {
                 if (gateOptions.id === '') {
                     gateOptions.id = btoa(gateOptions.url)
                 }
@@ -68,9 +64,28 @@ export const formEditGate = (
                     gateOptions.icon = getSvgIcon(gateOptions.url)
                 }
                 if (gateOptions.title === '') {
-                    gateOptions.title = gateOptions.url
+                    btn.setButtonText('Fetching title...')
+                    btn.setDisabled(true)
+                    try {
+                        gateOptions.title = await getTitle(gateOptions.url)
+                    } catch (error) {
+                        gateOptions.title = gateOptions.url
+                        new Notice('Failed to fetch title')
+                    }
                 }
                 onSubmit(gateOptions)
             })
     )
+}
+
+const getTitle = (url: string) => {
+    return fetch(
+        `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`
+    )
+        .then((response) => response.text())
+        .then((html) => {
+            const doc = new DOMParser().parseFromString(html, 'text/html')
+            const title = doc.querySelectorAll('title')[0]
+            return title.innerText
+        })
 }
