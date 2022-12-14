@@ -15,12 +15,25 @@ export const formEditGate = (
             })
     )
 
-    new Setting(contentEl).setName('Name').addText((text) =>
+    new Setting(contentEl).setName('Name')
+        .setDesc('Leave it blank to use the URL as the name')
+        .addText((text) =>
         text
-            .setPlaceholder('Gate title')
+
             .setValue(gateOptions.title)
             .onChange(async (value) => {
                 gateOptions.title = value
+            })
+    )
+
+    new Setting(contentEl)
+        .setName('Icon')
+        .setDesc('Leave it blank to enable auto-detect')
+        .addText((text) =>
+        text
+            .setValue(gateOptions.icon)
+            .onChange(async (value) => {
+                gateOptions.icon = value
             })
     )
 
@@ -51,7 +64,12 @@ export const formEditGate = (
                 if (gateOptions.id === '') {
                     gateOptions.id = btoa(gateOptions.url)
                 }
-                gateOptions.icon = getSvgIcon(gateOptions.url)
+                if (gateOptions.icon === '') {
+                    gateOptions.icon = getSvgIcon(gateOptions.url)
+                }
+                if (gateOptions.title === '') {
+                    gateOptions.title = gateOptions.url
+                }
                 onSubmit(gateOptions)
             })
     )
