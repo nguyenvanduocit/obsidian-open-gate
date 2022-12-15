@@ -23,6 +23,6 @@ export const registerGate = (plugin: Plugin, options: GateFrameOption) => {
     plugin.addCommand({
         id: `open-gate-${btoa(options.url)}`,
         name: `Open gate ${options.title}`,
-        callback: async () => await openView(plugin.app.workspace, options.id)
+        callback: async () => await openView(plugin.app.workspace, options.id, options.position)
     })
 }
