@@ -11,7 +11,19 @@ export class GateView extends ItemView {
         this.options = options
     }
 
+    addActions(): void {
+        this.addAction('refresh-ccw', 'Reload', () => {
+            this.frame.reload()
+        })
+
+        this.addAction('home', 'Home page', () => {
+            this.frame.loadURL(this.options?.url ?? 'about:blank')
+        })
+    }
+
     onload(): void {
+        super.onload()
+        this.addActions()
         this.contentEl.empty()
         this.contentEl.addClass('open-gate-view')
         if (this.options?.url) {
@@ -24,10 +36,17 @@ export class GateView extends ItemView {
     onPaneMenu(menu: Menu, source: string): void {
         super.onPaneMenu(menu, source)
         menu.addItem((item) => {
-            item.setTitle('support author')
-            item.setIcon('globe')
+            item.setTitle('Reload')
+            item.setIcon('refresh-ccw')
             item.onClick(() => {
-                open('https://twitter.com/duocdev')
+                this.frame.reload()
+            })
+        })
+        menu.addItem((item) => {
+            item.setTitle('Home page')
+            item.setIcon('home')
+            item.onClick(() => {
+                this.frame.loadURL(this.options?.url ?? 'about:blank')
             })
         })
     }
@@ -46,9 +65,5 @@ export class GateView extends ItemView {
         }
 
         return this.options?.icon ?? 'globe'
-    }
-
-    focus(): void {
-        this.frame.focus()
     }
 }
