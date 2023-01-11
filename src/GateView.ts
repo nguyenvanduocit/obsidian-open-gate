@@ -49,6 +49,17 @@ export class GateView extends ItemView {
                 this.frame.loadURL(this.options?.url ?? 'about:blank')
             })
         })
+        menu.addItem((item) => {
+            item.setTitle('Toggle DevTools')
+            item.setIcon('file-cog')
+            item.onClick(() => {
+                if (this.frame.isDevToolsOpened()) {
+                    this.frame.closeDevTools()
+                } else {
+                    this.frame.openDevTools()
+                }
+            })
+        })
     }
 
     getViewType(): string {

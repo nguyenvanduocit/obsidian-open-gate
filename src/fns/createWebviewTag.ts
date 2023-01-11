@@ -5,7 +5,7 @@ export const createWebviewTag = (url: string): WebviewTag => {
     const webviewTag = document.createElement(
         'webview'
     ) as unknown as WebviewTag
-    webviewTag.setAttribute('allowpopups', 'true')
+    webviewTag.setAttribute('allowpopups', '')
     webviewTag.setAttribute('partition', 'persist:' + id)
     webviewTag.setAttribute('src', url)
     webviewTag.addClass('open-gate-webview')

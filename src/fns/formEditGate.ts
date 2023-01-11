@@ -17,7 +17,7 @@ export const formEditGate = (
 
     new Setting(contentEl)
         .setName('Name')
-        .setDesc('Leave it blank to use the URL as the name')
+        .setDesc('Leave it blank to enable auto-fetch')
         .addText((text) =>
             text.setValue(gateOptions.title).onChange(async (value) => {
                 gateOptions.title = value
