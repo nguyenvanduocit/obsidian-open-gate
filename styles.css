@@ -3,7 +3,8 @@
     overflow: hidden !important;
 }
 
-.open-gate-view webview {
+.open-gate-view .open-gate-iframe,
+.open-gate-view .open-gate-webview {
     width: 100%;
     height: 100%;
     border: none;

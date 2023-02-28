@@ -1,23 +1,35 @@
 import { ItemView, WorkspaceLeaf, Menu } from 'obsidian'
 import { createWebviewTag } from './fns/createWebviewTag'
+import { Platform } from "obsidian";
+import { createIframe } from './fns/createIframe'
 
 export class GateView extends ItemView {
     private readonly options?: GateFrameOption
-    private frame: WebviewTag
+    private frame: WebviewTag | HTMLIFrameElement
+    private readonly useIframe: boolean = false
 
     constructor(leaf: WorkspaceLeaf, options: GateFrameOption) {
         super(leaf)
         this.navigation = false
         this.options = options
+        this.useIframe = Platform.isMobileApp
     }
 
     addActions(): void {
         this.addAction('refresh-ccw', 'Reload', () => {
-            this.frame.reload()
+            if (this.frame instanceof HTMLIFrameElement) {
+                this.frame.src = this.frame.src
+            } else {
+                this.frame.reload()
+            }
         })
 
         this.addAction('home', 'Home page', () => {
-            this.frame.loadURL(this.options?.url ?? 'about:blank')
+            if (this.frame instanceof HTMLIFrameElement) {
+                this.frame.src = this.options?.url ?? 'about:blank'
+            } else {
+                this.frame.loadURL(this.options?.url ?? 'about:blank')
+            }
         })
     }
 
@@ -26,11 +38,16 @@ export class GateView extends ItemView {
         this.addActions()
         this.contentEl.empty()
         this.contentEl.addClass('open-gate-view')
-        if (this.options?.url) {
-            this.frame = createWebviewTag(this.options.url)
-        }
 
-        this.contentEl.appendChild(this.frame as unknown as HTMLElement)
+        if (this.options?.url) {
+            if (this.useIframe) {
+                this.frame = createIframe(this.options.url)
+            } else {
+                this.frame = createWebviewTag(this.options!.url)
+            }
+
+            this.contentEl.appendChild(this.frame as unknown as HTMLElement)
+        }
     }
 
     onPaneMenu(menu: Menu, source: string): void {
@@ -39,20 +56,32 @@ export class GateView extends ItemView {
             item.setTitle('Reload')
             item.setIcon('refresh-ccw')
             item.onClick(() => {
-                this.frame.reload()
+                if (this.frame instanceof HTMLIFrameElement) {
+                    this.frame.src = this.frame.src
+                } else {
+                    this.frame.reload()
+                }
             })
         })
         menu.addItem((item) => {
             item.setTitle('Home page')
             item.setIcon('home')
             item.onClick(() => {
-                this.frame.loadURL(this.options?.url ?? 'about:blank')
+                if (this.frame instanceof HTMLIFrameElement) {
+                    this.frame.src = this.options?.url ?? 'about:blank'
+                } else {
+                    this.frame.loadURL(this.options?.url ?? 'about:blank')
+                }
             })
         })
         menu.addItem((item) => {
             item.setTitle('Toggle DevTools')
             item.setIcon('file-cog')
             item.onClick(() => {
+                if (this.frame instanceof HTMLIFrameElement) {
+                    return
+                }
+
                 if (this.frame.isDevToolsOpened()) {
                     this.frame.closeDevTools()
                 } else {

@@ -1,5 +1,4 @@
 import { Workspace, WorkspaceLeaf } from 'obsidian'
-import { GateView } from '../GateView'
 
 export const openView = async (
     workspace: Workspace,
@@ -10,6 +9,7 @@ export const openView = async (
     let leafs = workspace.getLeavesOfType(id)
     if (leafs.length == 0) {
         createView(workspace, id, position)
+        return
     }
 
     leaf = workspace.getLeavesOfType(id)[0]
