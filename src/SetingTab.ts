@@ -1,4 +1,4 @@
-import { App, PluginSettingTab, Setting } from 'obsidian'
+import { App, PluginSettingTab, Setting, Platform } from 'obsidian'
 import OpenGatePlugin from './main'
 import { ModalEditGate } from './ModalEditGate'
 import { createEmptyGateOption } from './fns/createEmptyGateOption'
@@ -21,6 +21,17 @@ export class SettingTab extends PluginSettingTab {
         this.shouldNotify = false
         const { containerEl } = this
         containerEl.empty()
+
+        if (Platform.isMobileApp || true) {
+            containerEl.createEl('div', {
+                text: 'On mobile, some websites may not work. it is a limitation of Obsidian Mobile. Please use Obsidian Desktop instead. Follow me on Twitter to get the latest updates about the issue: ',
+                cls: 'open-gate-mobile-warning'
+            }).createEl('a', {
+                text: '@duocdev',
+                cls: 'open-gate-mobile-link',
+                href: 'https://twitter.com/duocdev',
+            })
+        }
 
         containerEl
             .createEl('button', { text: 'New gate', cls: 'mod-cta' })

@@ -1,6 +1,6 @@
 import { ItemView, WorkspaceLeaf, Menu } from 'obsidian'
 import { createWebviewTag } from './fns/createWebviewTag'
-import { Platform } from "obsidian";
+import { Platform } from 'obsidian'
 import { createIframe } from './fns/createIframe'
 
 export class GateView extends ItemView {
