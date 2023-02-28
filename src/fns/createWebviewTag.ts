@@ -1,6 +1,4 @@
 export const createWebviewTag = (url: string): WebviewTag => {
-    // has url to base64
-    //const id = btoa(url);
     const id = 'open-gate' // use the same ID for every webview, that allow to save cookie
     const webviewTag = document.createElement(
         'webview'
