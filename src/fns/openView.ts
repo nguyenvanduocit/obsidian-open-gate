@@ -7,16 +7,17 @@ export const openView = async (
 ): Promise<void> => {
     let leaf: WorkspaceLeaf
     let leafs = workspace.getLeavesOfType(id)
-    if (leafs.length == 0) {
-        createView(workspace, id, position)
+    if (leafs.length > 0) {
+        workspace.revealLeaf(leafs[0])
         return
     }
 
-    leaf = workspace.getLeavesOfType(id)[0]
+    leaf = await createView(workspace, id, position)
     workspace.revealLeaf(leaf)
+    return
 }
 
-const createView = (
+const createView = async (
     workspace: Workspace,
     id: string,
     position?: GateFrameOptionType
@@ -34,6 +35,6 @@ const createView = (
             leaf = workspace.getRightLeaf(false)
             break
     }
-
-    leaf?.setViewState({ type: id, active: true })
+    await leaf?.setViewState({ type: id, active: true })
+    return leaf
 }
