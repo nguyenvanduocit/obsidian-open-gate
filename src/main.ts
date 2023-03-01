@@ -48,7 +48,7 @@ export default class OpenGatePlugin extends Plugin {
             import('./datadog')
         }
 
-        if (this.settings.allowErrorReport === undefined) {
+        if (this.settings.allowErrorReport === undefined && !this.settings.isFirstRun) {
             new ModalAskForLogPermission(
                 this.app,
                 this.onLogPermissionAllow.bind(this),
