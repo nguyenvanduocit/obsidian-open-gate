@@ -5,10 +5,12 @@ import { ModalEditGate } from './ModalEditGate'
 import { ModalOnBoarding } from './ModalOnboarding'
 import { unloadView } from './fns/unloadView'
 import { createEmptyGateOption } from './fns/createEmptyGateOption'
+import { ModalAskForLogPermission } from './ModalAskForLogPermission'
 
 interface PluginSetting {
     isFirstRun: boolean
     gates: Record<string, GateFrameOption>
+    allowErrorReport?: boolean
 }
 
 const DEFAULT_SETTINGS: PluginSetting = {
@@ -21,9 +23,37 @@ export default class OpenGatePlugin extends Plugin {
 
     async onload() {
         await this.loadSettings()
+
+        if (this.settings.isFirstRun) {
+            this.settings.isFirstRun = false
+            await this.saveSettings()
+
+            if (Object.keys(this.settings.gates).length === 0) {
+                new ModalOnBoarding(
+                    this.app,
+                    createEmptyGateOption(),
+                    async (gate: GateFrameOption) => {
+                        await this.addGate(gate)
+                    }
+                ).open()
+            }
+        }
+
         for (const gateId in this.settings.gates) {
             const gate = this.settings.gates[gateId]
             registerGate(this, gate)
+        }
+
+        if (this.settings.allowErrorReport === true) {
+            import('./datadog')
+        }
+
+        if (this.settings.allowErrorReport === undefined) {
+            new ModalAskForLogPermission(
+                this.app,
+                this.onLogPermissionAllow.bind(this),
+                this.onLogPermissionDeny.bind(this)
+            ).open()
         }
 
         this.addSettingTab(new SettingTab(this.app, this))
@@ -41,6 +71,17 @@ export default class OpenGatePlugin extends Plugin {
                 ).open()
             }
         })
+    }
+
+    async onLogPermissionAllow() {
+        this.settings.allowErrorReport = true
+        await this.saveSettings()
+        import('./datadog')
+    }
+
+    async onLogPermissionDeny() {
+        this.settings.allowErrorReport = false
+        await this.saveSettings()
     }
 
     onunload() {}
@@ -73,26 +114,10 @@ export default class OpenGatePlugin extends Plugin {
 
     async loadSettings() {
         this.settings = await this.loadData()
-
-        if (!this.settings) {
-            this.settings = DEFAULT_SETTINGS
-        }
-
-        if (!this.settings.isFirstRun) {
-            return
-        }
-
-        this.settings.isFirstRun = false
-        await this.saveSettings()
-
-        if (Object.keys(this.settings.gates).length === 0) {
-            new ModalOnBoarding(
-                this.app,
-                createEmptyGateOption(),
-                async (gate: GateFrameOption) => {
-                    await this.addGate(gate)
-                }
-            ).open()
+        // merge default settings
+        this.settings = {
+            ...DEFAULT_SETTINGS,
+            ...this.settings
         }
     }
 

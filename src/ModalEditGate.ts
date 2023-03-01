@@ -16,7 +16,7 @@ export class ModalEditGate extends Modal {
 
     onOpen() {
         const { contentEl } = this
-        contentEl.createEl('h3', { text: 'Opening new gate' })
+        contentEl.createEl('h3', { text: 'Open Gate' })
         formEditGate(contentEl, this.gateOptions, (result) => {
             this.onSubmit(result)
             this.close()

@@ -1,5 +1,6 @@
 import { Notice, Setting } from 'obsidian'
 import { getSvgIcon } from './getSvgIcon'
+import { datadogLogs } from '@datadog/browser-logs'
 
 export const formEditGate = (
     contentEl: HTMLElement,
@@ -54,7 +55,9 @@ export const formEditGate = (
 
     new Setting(contentEl).addButton((btn) =>
         btn
-            .setButtonText(gateOptions.id ? 'Update' : 'Create')
+            .setButtonText(
+                gateOptions.id ? 'Update the gate' : 'Create new gate'
+            )
             .setCta()
             .onClick(async () => {
                 if (gateOptions.id === '') {
@@ -87,5 +90,13 @@ const getTitle = (url: string) => {
             const doc = new DOMParser().parseFromString(html, 'text/html')
             const title = doc.querySelectorAll('title')[0]
             return title.innerText
+        })
+        .catch((error) => {
+            datadogLogs.logger.error('failed to getTitle', {
+                function: 'getTitle',
+                url: url,
+                error: error
+            })
+            return url
         })
 }
