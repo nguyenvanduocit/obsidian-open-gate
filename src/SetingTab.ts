@@ -91,17 +91,6 @@ export class SettingTab extends PluginSettingTab {
             text: `To reload Obsidian, you can use the menu "view -> Force reload" or "Reload App" in the command palette.`
         })
 
-        /*new Setting(containerEl)
-          .setName("Report Log")
-          .setDesc("To improve this plugin, we want to collect some logs. ONLY logs that produced by Open Gate will be collected, you can check our source code on Github. You can disable this collection at any time in the setting tab.")
-          .addToggle((toggle) => {
-            toggle.setValue(this.plugin.settings?.allowErrorReport ?? false)
-              toggle.onChange(async (value) => {
-              this.plugin.settings.allowErrorReport = value
-              await this.plugin.saveSettings()
-            })
-          })*/
-
         new Setting(containerEl)
             .setName('Follow me on Twitter')
             .setDesc('@duocdev')

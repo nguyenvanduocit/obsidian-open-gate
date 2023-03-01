@@ -5,12 +5,10 @@ import { ModalEditGate } from './ModalEditGate'
 import { ModalOnBoarding } from './ModalOnboarding'
 import { unloadView } from './fns/unloadView'
 import { createEmptyGateOption } from './fns/createEmptyGateOption'
-import { ModalAskForLogPermission } from './ModalAskForLogPermission'
 
 interface PluginSetting {
     isFirstRun: boolean
     gates: Record<string, GateFrameOption>
-    allowErrorReport?: boolean
 }
 
 const DEFAULT_SETTINGS: PluginSetting = {
@@ -44,19 +42,6 @@ export default class OpenGatePlugin extends Plugin {
             registerGate(this, gate)
         }
 
-        if (this.settings.allowErrorReport === true) {
-            import('./datadog')
-        }
-
-        const canAskForLogPermission = false // this.settings.allowErrorReport === undefined
-        if (canAskForLogPermission) {
-            new ModalAskForLogPermission(
-                this.app,
-                this.onLogPermissionAllow.bind(this),
-                this.onLogPermissionDeny.bind(this)
-            ).open()
-        }
-
         this.addSettingTab(new SettingTab(this.app, this))
 
         this.addCommand({
@@ -72,17 +57,6 @@ export default class OpenGatePlugin extends Plugin {
                 ).open()
             }
         })
-    }
-
-    async onLogPermissionAllow() {
-        this.settings.allowErrorReport = true
-        await this.saveSettings()
-        import('./datadog')
-    }
-
-    async onLogPermissionDeny() {
-        this.settings.allowErrorReport = false
-        await this.saveSettings()
     }
 
     onunload() {}
