@@ -2,13 +2,14 @@
 
 # Obsidian Open Gate
 
-This plugin allows you to embed any website in your Obsidian.
+This plugin allows you to embed any website to Obsidian, you have anything you need in one place. You can browse website and take notes at the same time. e.g. Ask ChatGPT and copy the answer directly to your note.
 
 ## Features
 
 -   Embed any website in your Obsidian
 -   Auto generate icon
 -   Embed any site that can not be embedded by iframe: Google Translate
+-   Support for mobile
 
 ## Usage
 
