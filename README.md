@@ -1,4 +1,5 @@
 ![](./stuff/img.png)
+![](./stuff/img_3.png)
 
 # Obsidian Open Gate
 
