@@ -1,7 +1,7 @@
 {
     "name": "obsidian-open-gate",
-    "version": "1.1.7",
-    "description": "Embed any website to Obsidian, from now all, you have anything you need in one place.",
+    "version": "1.2.0",
+    "description": "Embedding any website to Obsidian, from now all, you have anything you need in one place.",
     "main": "main.js",
     "scripts": {
         "dev": "node esbuild.config.mjs",
