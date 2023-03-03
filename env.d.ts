@@ -21,4 +21,5 @@ declare type GateFrameOption = {
     url: string
     hasRibbon?: boolean
     position?: GateFrameOptionType
+    userAgent?: string
 }

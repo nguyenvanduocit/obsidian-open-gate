@@ -7,7 +7,10 @@ export const formEditGate = (
     gateOptions: GateFrameOption,
     onSubmit: (result: GateFrameOption) => void
 ) => {
-    new Setting(contentEl).setName('URL').addText((text) =>
+    new Setting(contentEl)
+        .setName('URL')
+        .setClass('open-gate--form-field')
+        .addText((text) =>
         text
             .setPlaceholder('https://example.com')
             .setValue(gateOptions.url)
@@ -18,7 +21,7 @@ export const formEditGate = (
 
     new Setting(contentEl)
         .setName('Name')
-        .setDesc('Leave it blank to enable auto-fetch')
+        .setClass('open-gate--form-field')
         .addText((text) =>
             text.setValue(gateOptions.title).onChange(async (value) => {
                 gateOptions.title = value
@@ -27,6 +30,7 @@ export const formEditGate = (
 
     new Setting(contentEl)
         .setName('Icon')
+        .setClass('open-gate--form-field')
         .setDesc('Leave it blank to enable auto-detect')
         .addText((text) =>
             text.setValue(gateOptions.icon).onChange(async (value) => {
@@ -34,7 +38,11 @@ export const formEditGate = (
             })
         )
 
-    new Setting(contentEl).setName('Pin to menu').addToggle((text) =>
+    new Setting(contentEl)
+        .setName('Pin to menu')
+        .setClass('open-gate--form-field')
+        .setDesc('If enabled, the gate will be pinned to the left bar')
+        .addToggle((text) =>
         text
             .setValue(gateOptions.hasRibbon === true)
             .onChange(async (value) => {
@@ -42,7 +50,11 @@ export const formEditGate = (
             })
     )
 
-    new Setting(contentEl).setName('Position').addDropdown((text) =>
+    new Setting(contentEl)
+        .setName('Position')
+        .setClass('open-gate--form-field')
+        .setDesc('What banner do you want to show?')
+        .addDropdown((text) =>
         text
             .addOption('left', 'Left')
             .addOption('right', 'Right')
@@ -52,6 +64,16 @@ export const formEditGate = (
                 gateOptions.position = value as GateFrameOptionType
             })
     )
+
+    new Setting(contentEl)
+        .setName('User Agent')
+        .setClass('open-gate--form-field')
+        .setDesc('Leave it blank if you are not sure')
+        .addText((text) =>
+            text.setValue(gateOptions.userAgent ?? "").onChange(async (value) => {
+                gateOptions.userAgent = value
+            })
+        )
 
     new Setting(contentEl).addButton((btn) =>
         btn
@@ -67,36 +89,9 @@ export const formEditGate = (
                     gateOptions.icon = getSvgIcon(gateOptions.url)
                 }
                 if (gateOptions.title === '') {
-                    btn.setButtonText('Fetching title...')
-                    btn.setDisabled(true)
-                    try {
-                        gateOptions.title = await getTitle(gateOptions.url)
-                    } catch (error) {
-                        gateOptions.title = gateOptions.url
-                        new Notice('Failed to fetch title')
-                    }
+                    gateOptions.title = gateOptions.url
                 }
                 onSubmit(gateOptions)
             })
     )
-}
-
-const getTitle = (url: string) => {
-    return fetch(
-        `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`
-    )
-        .then((response) => response.text())
-        .then((html) => {
-            const doc = new DOMParser().parseFromString(html, 'text/html')
-            const title = doc.querySelectorAll('title')[0]
-            return title.innerText
-        })
-        .catch((error) => {
-            datadogLogs.logger.error('failed to getTitle', {
-                function: 'getTitle',
-                url: url,
-                error: error
-            })
-            return url
-        })
 }

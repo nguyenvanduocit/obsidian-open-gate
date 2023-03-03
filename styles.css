@@ -30,3 +30,7 @@
     color: #fff;
     text-decoration: underline;
 }
+
+.open-gate--form-field .setting-item-control input[type="text"] {
+    width: 100%;
+}

@@ -43,7 +43,7 @@ export class GateView extends ItemView {
             if (this.useIframe) {
                 this.frame = createIframe(this.options.url)
             } else {
-                this.frame = createWebviewTag(this.options!.url)
+                this.frame = createWebviewTag(this.options!.url, this.options?.userAgent)
             }
 
             this.contentEl.appendChild(this.frame as unknown as HTMLElement)
