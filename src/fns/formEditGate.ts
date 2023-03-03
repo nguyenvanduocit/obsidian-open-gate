@@ -1,6 +1,5 @@
-import { Notice, Setting } from 'obsidian'
+import { Setting } from 'obsidian'
 import { getSvgIcon } from './getSvgIcon'
-import { datadogLogs } from '@datadog/browser-logs'
 
 export const formEditGate = (
     contentEl: HTMLElement,
@@ -65,13 +64,42 @@ export const formEditGate = (
             })
     )
 
+    const advancedOptions = contentEl.createDiv({cls: 'open-gate--advanced-options'})
+
     new Setting(contentEl)
+        .setName('Advanced Options')
+        .setClass('open-gate--form-field')
+        .setDesc('If enabled, the gate will be pinned to the left bar')
+        .addToggle((text) =>
+            text
+                .setValue(false)
+                .onChange(async (value) => {
+                    if (value) {
+                        advancedOptions.addClass('open-gate--advanced-options--show')
+                    } else {
+                        advancedOptions.removeClass('open-gate--advanced-options--show')
+                    }
+                })
+        )
+
+    new Setting(advancedOptions)
         .setName('User Agent')
         .setClass('open-gate--form-field')
         .setDesc('Leave it blank if you are not sure')
         .addText((text) =>
             text.setValue(gateOptions.userAgent ?? "").onChange(async (value) => {
                 gateOptions.userAgent = value
+            })
+        )
+
+    //zoomFactor
+    new Setting(advancedOptions)
+        .setName('Zoom Factor')
+        .setClass('open-gate--form-field')
+        .setDesc('Leave it blank if you are not sure')
+        .addText((text) =>
+            text.setValue(gateOptions.zoomFactor?.toString() ?? "0.0").onChange(async (value) => {
+                gateOptions.zoomFactor = parseFloat(value)
             })
         )
 

@@ -2,6 +2,7 @@ import { ItemView, WorkspaceLeaf, Menu } from 'obsidian'
 import { createWebviewTag } from './fns/createWebviewTag'
 import { Platform } from 'obsidian'
 import { createIframe } from './fns/createIframe'
+import WebviewTag = Electron.WebviewTag;
 
 export class GateView extends ItemView {
     private readonly options?: GateFrameOption
@@ -43,7 +44,7 @@ export class GateView extends ItemView {
             if (this.useIframe) {
                 this.frame = createIframe(this.options.url)
             } else {
-                this.frame = createWebviewTag(this.options!.url, this.options?.userAgent)
+                this.frame = createWebviewTag(this.options!.url, this.options?.userAgent, this.options?.zoomFactor)
             }
 
             this.contentEl.appendChild(this.frame as unknown as HTMLElement)

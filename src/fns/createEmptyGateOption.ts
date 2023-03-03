@@ -5,6 +5,7 @@ export const createEmptyGateOption = (): GateFrameOption => {
         icon: '',
         hasRibbon: true,
         position: 'right',
-        url: ''
+        url: '',
+        zoomFactor: 1.0,
     }
 }
