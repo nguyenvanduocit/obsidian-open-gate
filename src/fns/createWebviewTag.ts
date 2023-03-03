@@ -5,17 +5,21 @@ export const createWebviewTag = (url: string, userAgent?: string, zoomFactory?: 
     const webviewTag = document.createElement(
         'webview'
     ) as unknown as WebviewTag
-    webviewTag.setAttribute('allowpopups', '')
+    webviewTag.setAttribute('allowpopups', 'true')
     webviewTag.setAttribute('partition', 'persist:' + id)
     webviewTag.setAttribute('src', url)
+    webviewTag.setAttribute('nodeintegration', "true")
     webviewTag.addClass('open-gate-webview')
+
     if (userAgent) {
         webviewTag.setAttribute('useragent', userAgent)
     }
+
     if (zoomFactory) {
-        webviewTag.addEventListener('dom-ready', () => {
+        webviewTag.addEventListener('did-attach', () => {
             webviewTag.setZoomFactor(zoomFactory)
         })
+
     }
 
     return webviewTag
