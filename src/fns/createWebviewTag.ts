@@ -15,12 +15,11 @@ export const createWebviewTag = (url: string, userAgent?: string, zoomFactory?: 
         webviewTag.setAttribute('useragent', userAgent)
     }
 
-    if (zoomFactory) {
-        webviewTag.addEventListener('did-attach', () => {
-            webviewTag.setZoomFactor(zoomFactory)
-        })
+    webviewTag.addEventListener('did-attach', () => {
+        console.log(zoomFactory)
+    })
 
-    }
+
 
     return webviewTag
 }
