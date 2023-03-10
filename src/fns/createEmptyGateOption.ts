@@ -5,7 +5,9 @@ export const createEmptyGateOption = (): GateFrameOption => {
         icon: '',
         hasRibbon: true,
         position: 'right',
+        profileKey: 'open-gate',
         url: '',
         zoomFactor: 1.0,
+        userAgent: '',
     }
 }

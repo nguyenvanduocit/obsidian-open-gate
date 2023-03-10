@@ -92,6 +92,20 @@ export const formEditGate = (
             })
         )
 
+    new Setting(advancedOptions)
+        .setName('Profile Key')
+        .setClass('open-gate--form-field')
+        .setDesc('It\'s like profiles in Chrome, gates with the same profile can share storage')
+        .addText((text) =>
+            text.setValue(gateOptions.profileKey ?? "").onChange(async (value) => {
+                if (value === '') {
+                    value = "open-gate"
+                }
+
+                gateOptions.profileKey = value
+            })
+        )
+
     //zoomFactor
     new Setting(advancedOptions)
         .setName('Zoom Factor')
@@ -111,7 +125,11 @@ export const formEditGate = (
             .setCta()
             .onClick(async () => {
                 if (gateOptions.id === '') {
-                    gateOptions.id = btoa(gateOptions.url)
+                    let seedString = gateOptions.url;
+                    if (gateOptions.profileKey !== 'open-gate' && gateOptions.profileKey !== '') {
+                        seedString += gateOptions.profileKey
+                    }
+                    gateOptions.id = btoa(seedString)
                 }
                 if (gateOptions.icon === '') {
                     gateOptions.icon = getSvgIcon(gateOptions.url)
@@ -119,6 +137,7 @@ export const formEditGate = (
                 if (gateOptions.title === '') {
                     gateOptions.title = gateOptions.url
                 }
+
                 onSubmit(gateOptions)
             })
     )

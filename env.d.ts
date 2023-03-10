@@ -7,6 +7,7 @@ declare type GateFrameOption = {
     icon: string
     title: string
     url: string
+    profileKey?: string
     hasRibbon?: boolean
     position?: GateFrameOptionType
     userAgent?: string

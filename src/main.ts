@@ -16,6 +16,12 @@ const DEFAULT_SETTINGS: PluginSetting = {
     gates: {}
 }
 
+const defaultGateOption: Partial<GateFrameOption> = {
+    profileKey: 'open-gate',
+    zoomFactor: 1,
+}
+
+
 export default class OpenGatePlugin extends Plugin {
     settings: PluginSetting
 
@@ -39,6 +45,7 @@ export default class OpenGatePlugin extends Plugin {
 
         for (const gateId in this.settings.gates) {
             const gate = this.settings.gates[gateId]
+
             registerGate(this, gate)
         }
 
@@ -93,6 +100,21 @@ export default class OpenGatePlugin extends Plugin {
         this.settings = {
             ...DEFAULT_SETTINGS,
             ...this.settings
+        }
+
+        if (!this.settings.gates) {
+            this.settings.gates = {}
+        }
+
+        for (const gateId in this.settings.gates) {
+
+            if (this.settings.gates[gateId].profileKey === "") {
+                this.settings.gates[gateId].profileKey = defaultGateOption.profileKey
+            }
+
+            if (this.settings.gates[gateId].zoomFactor === 0 || this.settings.gates[gateId].zoomFactor === undefined) {
+                this.settings.gates[gateId].zoomFactor = defaultGateOption.zoomFactor
+            }
         }
     }
 

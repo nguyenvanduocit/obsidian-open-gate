@@ -3,7 +3,6 @@ import { createWebviewTag } from './fns/createWebviewTag'
 import { Platform } from 'obsidian'
 import { createIframe } from './fns/createIframe'
 import WebviewTag = Electron.WebviewTag;
-import { spawn } from 'child_process'
 export class GateView extends ItemView {
     private readonly options: GateFrameOption
     private frame: WebviewTag | HTMLIFrameElement
@@ -48,7 +47,7 @@ export class GateView extends ItemView {
         if (this.useIframe) {
             this.frame = createIframe(this.options.url)
         } else {
-            this.frame = createWebviewTag(this.options!.url, this.options?.userAgent, this.options?.zoomFactor)
+            this.frame = createWebviewTag(this.options)
         }
 
         this.contentEl.appendChild(this.frame as unknown as HTMLElement)
