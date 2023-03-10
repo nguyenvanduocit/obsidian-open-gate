@@ -16,7 +16,6 @@ export const createWebviewTag = (params: GateFrameOption): WebviewTag => {
     webviewTag.addEventListener('did-attach', () => {
         if (params.zoomFactor) {
             webviewTag.setZoomFactor(params.zoomFactor)
-            console.log('zoomFactor', webviewTag.getZoomLevel())
         }
     })
 
