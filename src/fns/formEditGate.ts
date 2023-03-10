@@ -69,7 +69,6 @@ export const formEditGate = (
     new Setting(contentEl)
         .setName('Advanced Options')
         .setClass('open-gate--form-field')
-        .setDesc('If enabled, the gate will be pinned to the left bar')
         .addToggle((text) =>
             text
                 .setValue(false)
