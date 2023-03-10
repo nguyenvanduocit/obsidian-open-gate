@@ -1,7 +1,5 @@
 import WebviewTag = Electron.WebviewTag;
 
-
-
 export const createWebviewTag = (params: GateFrameOption): WebviewTag => {
     const webviewTag = document.createElement(
         'webview'
@@ -18,6 +16,7 @@ export const createWebviewTag = (params: GateFrameOption): WebviewTag => {
     webviewTag.addEventListener('did-attach', () => {
         if (params.zoomFactor) {
             webviewTag.setZoomFactor(params.zoomFactor)
+            console.log('zoomFactor', webviewTag.getZoomLevel())
         }
     })
 
