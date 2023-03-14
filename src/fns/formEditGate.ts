@@ -1,5 +1,6 @@
 import { Setting } from 'obsidian'
 import { getSvgIcon } from './getSvgIcon'
+import { normalizeGateOption } from './normalizeGateOption'
 
 export const formEditGate = (
     contentEl: HTMLElement,
@@ -135,38 +136,7 @@ export const formEditGate = (
             )
             .setCta()
             .onClick(async () => {
-                if (gateOptions.id === '') {
-                    let seedString = gateOptions.url
-                    if (
-                        gateOptions.profileKey !== 'open-gate' &&
-                        gateOptions.profileKey !== ''
-                    ) {
-                        seedString += gateOptions.profileKey
-                    }
-                    gateOptions.id = btoa(seedString)
-                }
-
-                if (
-                    gateOptions.profileKey === '' ||
-                    gateOptions.profileKey === undefined
-                ) {
-                    gateOptions.profileKey = 'open-gate'
-                }
-
-                if (
-                    gateOptions.zoomFactor === 0 ||
-                    gateOptions.zoomFactor === undefined
-                ) {
-                    gateOptions.zoomFactor = 1
-                }
-
-                if (gateOptions.icon === '') {
-                    gateOptions.icon = getSvgIcon(gateOptions.url)
-                }
-                if (gateOptions.title === '') {
-                    gateOptions.title = gateOptions.url
-                }
-
+                gateOptions = normalizeGateOption(gateOptions)
                 onSubmit(gateOptions)
             })
     )

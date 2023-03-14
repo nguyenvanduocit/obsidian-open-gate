@@ -5,6 +5,7 @@ import { ModalEditGate } from './ModalEditGate'
 import { ModalOnBoarding } from './ModalOnboarding'
 import { unloadView } from './fns/unloadView'
 import { createEmptyGateOption } from './fns/createEmptyGateOption'
+import { normalizeGateOption } from './fns/normalizeGateOption'
 
 interface PluginSetting {
     isFirstRun: boolean
@@ -116,21 +117,7 @@ export default class OpenGatePlugin extends Plugin {
         }
 
         for (const gateId in this.settings.gates) {
-            if (
-                this.settings.gates[gateId].profileKey === '' ||
-                this.settings.gates[gateId].profileKey === undefined
-            ) {
-                this.settings.gates[gateId].profileKey =
-                    defaultGateOption.profileKey
-            }
-
-            if (
-                this.settings.gates[gateId].zoomFactor === 0 ||
-                this.settings.gates[gateId].zoomFactor === undefined
-            ) {
-                this.settings.gates[gateId].zoomFactor =
-                    defaultGateOption.zoomFactor
-            }
+            this.settings.gates[gateId] = normalizeGateOption(this.settings.gates[gateId])
         }
     }
 
