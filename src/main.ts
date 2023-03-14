@@ -19,9 +19,9 @@ const DEFAULT_SETTINGS: PluginSetting = {
 const defaultGateOption: Partial<GateFrameOption> = {
     profileKey: 'open-gate',
     zoomFactor: 1,
-    userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36 Edg/110.0.1587.57'
+    userAgent:
+        'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36 Edg/110.0.1587.57'
 }
-
 
 export default class OpenGatePlugin extends Plugin {
     settings: PluginSetting
@@ -78,6 +78,14 @@ export default class OpenGatePlugin extends Plugin {
             )
         }
 
+        if (gate.profileKey === '' || gate.profileKey === undefined) {
+            gate.profileKey = defaultGateOption.profileKey
+        }
+
+        if (gate.zoomFactor === 0 || gate.zoomFactor === undefined) {
+            gate.zoomFactor = defaultGateOption.zoomFactor
+        }
+
         this.settings.gates[gate.id] = gate
         await this.saveSettings()
     }
@@ -108,13 +116,20 @@ export default class OpenGatePlugin extends Plugin {
         }
 
         for (const gateId in this.settings.gates) {
-
-            if (this.settings.gates[gateId].profileKey === "") {
-                this.settings.gates[gateId].profileKey = defaultGateOption.profileKey
+            if (
+                this.settings.gates[gateId].profileKey === '' ||
+                this.settings.gates[gateId].profileKey === undefined
+            ) {
+                this.settings.gates[gateId].profileKey =
+                    defaultGateOption.profileKey
             }
 
-            if (this.settings.gates[gateId].zoomFactor === 0 || this.settings.gates[gateId].zoomFactor === undefined) {
-                this.settings.gates[gateId].zoomFactor = defaultGateOption.zoomFactor
+            if (
+                this.settings.gates[gateId].zoomFactor === 0 ||
+                this.settings.gates[gateId].zoomFactor === undefined
+            ) {
+                this.settings.gates[gateId].zoomFactor =
+                    defaultGateOption.zoomFactor
             }
         }
     }

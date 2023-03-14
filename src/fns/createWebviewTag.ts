@@ -1,4 +1,4 @@
-import WebviewTag = Electron.WebviewTag;
+import WebviewTag = Electron.WebviewTag
 
 export const createWebviewTag = (params: GateFrameOption): WebviewTag => {
     const webviewTag = document.createElement(

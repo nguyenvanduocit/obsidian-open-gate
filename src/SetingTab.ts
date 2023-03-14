@@ -23,14 +23,16 @@ export class SettingTab extends PluginSettingTab {
         containerEl.empty()
 
         if (Platform.isMobileApp) {
-            containerEl.createEl('div', {
-                text: 'On mobile, some websites may not work. it is a limitation of Obsidian Mobile. Please use Obsidian Desktop instead. Follow me on Twitter to get the latest updates about the issue: ',
-                cls: 'open-gate-mobile-warning'
-            }).createEl('a', {
-                text: '@duocdev',
-                cls: 'open-gate-mobile-link',
-                href: 'https://twitter.com/duocdev',
-            })
+            containerEl
+                .createEl('div', {
+                    text: 'On mobile, some websites may not work. it is a limitation of Obsidian Mobile. Please use Obsidian Desktop instead. Follow me on Twitter to get the latest updates about the issue: ',
+                    cls: 'open-gate-mobile-warning'
+                })
+                .createEl('a', {
+                    text: '@duocdev',
+                    cls: 'open-gate-mobile-link',
+                    href: 'https://twitter.com/duocdev'
+                })
         }
 
         containerEl

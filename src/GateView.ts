@@ -2,7 +2,7 @@ import { ItemView, WorkspaceLeaf, Menu } from 'obsidian'
 import { createWebviewTag } from './fns/createWebviewTag'
 import { Platform } from 'obsidian'
 import { createIframe } from './fns/createIframe'
-import WebviewTag = Electron.WebviewTag;
+import WebviewTag = Electron.WebviewTag
 export class GateView extends ItemView {
     private readonly options: GateFrameOption
     private frame: WebviewTag | HTMLIFrameElement
@@ -34,7 +34,7 @@ export class GateView extends ItemView {
     }
 
     isWebviewFrame(): boolean {
-        return this.frame !instanceof HTMLIFrameElement
+        return this.frame! instanceof HTMLIFrameElement
     }
 
     onload(): void {
@@ -52,14 +52,21 @@ export class GateView extends ItemView {
 
         this.contentEl.appendChild(this.frame as unknown as HTMLElement)
 
-        if (this.frame instanceof HTMLIFrameElement) {}else{
-            this.frame.addEventListener('will-navigate', this.webViewWillNavigate.bind(this))
-            this.frame.addEventListener('console-message', async (event: Electron.ConsoleMessageEvent) => {
-                if (event.message.startsWith('open-gate-open:')) {
-                    const url = event.message.replace('open-gate-open:', '')
-                    window.open(url)
+        if (this.frame instanceof HTMLIFrameElement) {
+        } else {
+            this.frame.addEventListener(
+                'will-navigate',
+                this.webViewWillNavigate.bind(this)
+            )
+            this.frame.addEventListener(
+                'console-message',
+                async (event: Electron.ConsoleMessageEvent) => {
+                    if (event.message.startsWith('open-gate-open:')) {
+                        const url = event.message.replace('open-gate-open:', '')
+                        window.open(url)
+                    }
                 }
-            })
+            )
 
             this.frame.addEventListener('dom-ready', async () => {
                 // typescript indicates type
@@ -78,15 +85,17 @@ export class GateView extends ItemView {
     onunload(): void {
         this.frame.remove()
         if (this.frame instanceof HTMLIFrameElement) {
-
         } else {
-            this.frame.removeEventListener('will-navigate', this.webViewWillNavigate.bind(this))
+            this.frame.removeEventListener(
+                'will-navigate',
+                this.webViewWillNavigate.bind(this)
+            )
         }
         super.onunload()
     }
 
     webViewWillNavigate(event: Electron.Event, url: string): void {
-       console.log('will-navigate', url)
+        console.log('will-navigate', url)
     }
 
     onPaneMenu(menu: Menu, source: string): void {
