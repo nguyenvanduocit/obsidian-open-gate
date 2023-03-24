@@ -117,7 +117,9 @@ export default class OpenGatePlugin extends Plugin {
         }
 
         for (const gateId in this.settings.gates) {
-            this.settings.gates[gateId] = normalizeGateOption(this.settings.gates[gateId])
+            this.settings.gates[gateId] = normalizeGateOption(
+                this.settings.gates[gateId]
+            )
         }
     }
 
