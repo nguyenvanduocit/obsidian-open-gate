@@ -44,3 +44,17 @@
 .open-gate--advanced-options--show {
     display: block;
 }
+
+.open-gate--quick-list-item{
+    padding: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.open-gate--quick-list-item.active,
+.open-gate--quick-list-item:hover {
+    background: var(--background-modifier-hover);
+}

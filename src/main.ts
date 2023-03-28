@@ -6,6 +6,7 @@ import { ModalOnBoarding } from './ModalOnboarding'
 import { unloadView } from './fns/unloadView'
 import { createEmptyGateOption } from './fns/createEmptyGateOption'
 import { normalizeGateOption } from './fns/normalizeGateOption'
+import { ModalListGates } from './ModalListGates'
 
 interface PluginSetting {
     isFirstRun: boolean
@@ -47,7 +48,6 @@ export default class OpenGatePlugin extends Plugin {
 
         for (const gateId in this.settings.gates) {
             const gate = this.settings.gates[gateId]
-
             registerGate(this, gate)
         }
 
@@ -60,6 +60,20 @@ export default class OpenGatePlugin extends Plugin {
                 new ModalEditGate(
                     this.app,
                     createEmptyGateOption(),
+                    async (gate: GateFrameOption) => {
+                        await this.addGate(gate)
+                    }
+                ).open()
+            }
+        })
+
+        this.addCommand({
+            id: `open-list-gates-modal`,
+            name: `List Gates`,
+            callback: async () => {
+                new ModalListGates(
+                    this.app,
+                    this.settings.gates,
                     async (gate: GateFrameOption) => {
                         await this.addGate(gate)
                     }
