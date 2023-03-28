@@ -3,7 +3,7 @@ import { formEditGate } from './fns/formEditGate'
 import { openView } from './fns/openView'
 
 export class ModalListGates extends Modal {
-   gates:  Record<string, GateFrameOption>
+    gates: Record<string, GateFrameOption>
     onSubmit: (result: GateFrameOption) => void
     constructor(
         app: App,
@@ -12,7 +12,7 @@ export class ModalListGates extends Modal {
     ) {
         super(app)
         this.onSubmit = onSubmit
-        this.gates =  gates
+        this.gates = gates
     }
 
     onOpen() {
@@ -20,9 +20,11 @@ export class ModalListGates extends Modal {
         for (const gateId in this.gates) {
             const gate = this.gates[gateId]
             // create svg icon
-            const container = contentEl.createEl('div', { cls: 'open-gate--quick-list-item' })
+            const container = contentEl.createEl('div', {
+                cls: 'open-gate--quick-list-item'
+            })
             // @ts-ignore-next-line
-            container.createEl(`svg`, { cls:'svg-icon' }).innerHTML = gate.icon
+            container.createEl(`svg`, { cls: 'svg-icon' }).innerHTML = gate.icon
             container.createEl('span', { text: gate.title })
 
             container.addEventListener('click', async () => {
