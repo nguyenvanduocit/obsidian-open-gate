@@ -29,3 +29,9 @@ Then you will the the icon of then website in the left sidebar.
 ![](./stuff/img_2.png)
 
 Add new gate does not require to restart Obsidian. But editing and deleting gate requires to restart Obsidian.
+
+### Quick switcher
+
+You can quickly open gates using a single shortcut. The default is `Ctrl+Shift+G` or `Cmd+Shift+G`. You can change it in the Hotkeys section of Obsidian.
+
+![](./stuff/img_4.png)

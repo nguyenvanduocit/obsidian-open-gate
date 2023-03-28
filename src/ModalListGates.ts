@@ -17,6 +17,7 @@ export class ModalListGates extends Modal {
 
     onOpen() {
         const { contentEl } = this
+
         for (const gateId in this.gates) {
             const gate = this.gates[gateId]
             // create svg icon

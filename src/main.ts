@@ -70,6 +70,7 @@ export default class OpenGatePlugin extends Plugin {
         this.addCommand({
             id: `open-list-gates-modal`,
             name: `List Gates`,
+            hotkeys: [{ modifiers: ["Mod", "Shift"], key: "g" }],
             callback: async () => {
                 new ModalListGates(
                     this.app,
