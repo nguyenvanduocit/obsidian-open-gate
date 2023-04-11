@@ -94,6 +94,9 @@ export class GateView extends ItemView {
         super.onunload()
     }
 
+    webViewWillNavigate(event: Electron.Event, url: string): void {
+    }
+
     onPaneMenu(menu: Menu, source: string): void {
         super.onPaneMenu(menu, source)
         menu.addItem((item) => {
