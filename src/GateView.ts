@@ -45,7 +45,7 @@ export class GateView extends ItemView {
         this.contentEl.addClass('open-gate-view')
 
         if (this.useIframe) {
-            this.frame = createIframe(this.options.url)
+            this.frame = createIframe(this.options)
         } else {
             this.frame = createWebviewTag(this.options)
         }
@@ -94,8 +94,7 @@ export class GateView extends ItemView {
         super.onunload()
     }
 
-    webViewWillNavigate(event: Electron.Event, url: string): void {
-    }
+    webViewWillNavigate(event: Electron.Event, url: string): void {}
 
     onPaneMenu(menu: Menu, source: string): void {
         super.onPaneMenu(menu, source)

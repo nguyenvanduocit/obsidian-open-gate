@@ -7,10 +7,8 @@ import { unloadView } from './fns/unloadView'
 import { createEmptyGateOption } from './fns/createEmptyGateOption'
 import { normalizeGateOption } from './fns/normalizeGateOption'
 import { ModalListGates } from './ModalListGates'
-import { createWebviewTag } from './fns/createWebviewTag'
-import { createIframe } from './fns/createIframe'
-import WebviewTag = Electron.WebviewTag
 import { registerCodeBlockProcessor } from './fns/registerCodeBlockProcessor'
+import { registerLinkProcessor } from './fns/registerLinkProcessor'
 
 interface PluginSetting {
     uuid: string
@@ -24,9 +22,7 @@ const DEFAULT_SETTINGS: PluginSetting = {
 
 const defaultGateOption: Partial<GateFrameOption> = {
     profileKey: 'open-gate',
-    zoomFactor: 1,
-    userAgent:
-        'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36 Edg/110.0.1587.57'
+    zoomFactor: 1
 }
 
 export default class OpenGatePlugin extends Plugin {
@@ -35,6 +31,15 @@ export default class OpenGatePlugin extends Plugin {
     async onload() {
         await this.loadSettings()
 
+        await this.initFrames()
+        this.addSettingTab(new SettingTab(this.app, this))
+        this.registerCommands()
+
+        registerCodeBlockProcessor(this)
+        registerLinkProcessor(this)
+    }
+
+    private async initFrames() {
         if (this.settings.uuid === '') {
             this.settings.uuid = this.generateUuid()
             await this.saveSettings()
@@ -54,9 +59,9 @@ export default class OpenGatePlugin extends Plugin {
             const gate = this.settings.gates[gateId]
             registerGate(this, gate)
         }
+    }
 
-        this.addSettingTab(new SettingTab(this.app, this))
-
+    private registerCommands() {
         this.addCommand({
             id: `open-gate-create-new`,
             name: `Create new gate`,
@@ -85,8 +90,6 @@ export default class OpenGatePlugin extends Plugin {
                 ).open()
             }
         })
-
-        registerCodeBlockProcessor(this)
     }
 
     onunload() {}
@@ -109,6 +112,7 @@ export default class OpenGatePlugin extends Plugin {
         }
 
         this.settings.gates[gate.id] = gate
+
         await this.saveSettings()
     }
 

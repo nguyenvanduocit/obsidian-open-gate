@@ -30,17 +30,14 @@ export function registerCodeBlockProcessor(plugin: Plugin) {
         }
 
         let frame: HTMLIFrameElement | WebviewTag
+        const options = {
+            profileKey: profileKey,
+            url: src
+        }
 
         if (Platform.isMobileApp) {
-            frame = createIframe(src)
+            frame = createIframe(options)
         } else {
-            const options = {
-                icon: '',
-                id: '',
-                title: '',
-                profileKey: profileKey,
-                url: src
-            }
             frame = createWebviewTag(options)
         }
 
