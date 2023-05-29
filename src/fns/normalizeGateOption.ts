@@ -20,6 +20,7 @@ export const normalizeGateOption = (gate: GateFrameOption): GateFrameOption => {
     if (gate.icon === '') {
         gate.icon = getSvgIcon(gate.url)
     }
+
     if (gate.title === '') {
         gate.title = gate.url
     }

@@ -9,12 +9,12 @@ import { normalizeGateOption } from './fns/normalizeGateOption'
 import { ModalListGates } from './ModalListGates'
 
 interface PluginSetting {
-    isFirstRun: boolean
+    uuid: string
     gates: Record<string, GateFrameOption>
 }
 
 const DEFAULT_SETTINGS: PluginSetting = {
-    isFirstRun: true,
+    uuid: '',
     gates: {}
 }
 
@@ -31,8 +31,8 @@ export default class OpenGatePlugin extends Plugin {
     async onload() {
         await this.loadSettings()
 
-        if (this.settings.isFirstRun) {
-            this.settings.isFirstRun = false
+        if (this.settings.uuid === '') {
+            this.settings.uuid = this.generateUuid()
             await this.saveSettings()
 
             if (Object.keys(this.settings.gates).length === 0) {
@@ -140,5 +140,10 @@ export default class OpenGatePlugin extends Plugin {
 
     async saveSettings() {
         await this.saveData(this.settings)
+    }
+
+    private generateUuid() {
+        // generate uuid
+        return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
     }
 }

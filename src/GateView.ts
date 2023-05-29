@@ -95,7 +95,6 @@ export class GateView extends ItemView {
     }
 
     webViewWillNavigate(event: Electron.Event, url: string): void {
-        console.log('will-navigate', url)
     }
 
     onPaneMenu(menu: Menu, source: string): void {
