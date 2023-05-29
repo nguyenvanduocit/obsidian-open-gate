@@ -58,3 +58,13 @@
 .open-gate--quick-list-item:hover {
     background: var(--background-modifier-hover);
 }
+
+div[data-gate-id] .setting-item {
+    overflow: hidden;
+}
+
+div[data-gate-id] .setting-item-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
