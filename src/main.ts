@@ -1,4 +1,4 @@
-import { Notice, Plugin } from 'obsidian'
+import { Notice, Platform, Plugin } from 'obsidian'
 import { SettingTab } from './SetingTab'
 import { registerGate } from './fns/registerGate'
 import { ModalEditGate } from './ModalEditGate'
@@ -7,6 +7,10 @@ import { unloadView } from './fns/unloadView'
 import { createEmptyGateOption } from './fns/createEmptyGateOption'
 import { normalizeGateOption } from './fns/normalizeGateOption'
 import { ModalListGates } from './ModalListGates'
+import { createWebviewTag } from './fns/createWebviewTag'
+import { createIframe } from './fns/createIframe'
+import WebviewTag = Electron.WebviewTag
+import { registerCodeBlockProcessor } from './fns/registerCodeBlockProcessor'
 
 interface PluginSetting {
     uuid: string
@@ -70,7 +74,7 @@ export default class OpenGatePlugin extends Plugin {
         this.addCommand({
             id: `open-list-gates-modal`,
             name: `List Gates`,
-            hotkeys: [{ modifiers: ["Mod", "Shift"], key: "g" }],
+            hotkeys: [{ modifiers: ['Mod', 'Shift'], key: 'g' }],
             callback: async () => {
                 new ModalListGates(
                     this.app,
@@ -81,6 +85,8 @@ export default class OpenGatePlugin extends Plugin {
                 ).open()
             }
         })
+
+        registerCodeBlockProcessor(this)
     }
 
     onunload() {}
@@ -144,6 +150,9 @@ export default class OpenGatePlugin extends Plugin {
 
     private generateUuid() {
         // generate uuid
-        return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+        return (
+            Math.random().toString(36).substring(2, 15) +
+            Math.random().toString(36).substring(2, 15)
+        )
     }
 }

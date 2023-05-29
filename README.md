@@ -20,6 +20,7 @@ This plugin allows you to embedding any website to Obsidian, you have anything y
 
 Then you will the the icon of then website in the left sidebar.
 
+
 ### Options
 
 ![](./stuff/img_1.png)
@@ -29,6 +30,19 @@ Then you will the the icon of then website in the left sidebar.
 ![](./stuff/img_2.png)
 
 Add new gate does not require to restart Obsidian. But editing and deleting gate requires to restart Obsidian.
+
+### Use Code block
+
+You can use code
+
+You can use code block to embed any website.
+
+~~~markdown
+```gate  
+https://12bit.vn
+height:300
+```
+~~~
 
 ### Quick switcher
 
