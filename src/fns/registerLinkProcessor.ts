@@ -15,12 +15,14 @@ export const registerLinkProcessor = (plugin: Plugin) => {
             const alt = el.getAttribute('alt')
             const altArr = alt?.split(';')
 
-            const height = altArr
-                ? altArr[0].replace('height:', '')?.trim() ?? '400px'
-                : '400px'
-            const profileKey = altArr
-                ? altArr[1]?.replace('profile:', '')
-                : 'open-gate'
+            let height = altArr ? altArr[0].replace('height:', '')?.trim() ?? '400px' : '400px'
+            if (!isNaN(Number(height))) {
+                height = height + 'px'
+            }
+
+            const profileKey = altArr ? altArr[1]?.replace('profile:', '') : 'open-gate'
+            const useragent = altArr ? altArr[2]?.replace('useragent:', '') : ''
+            const zoomFactor = altArr ? parseFloat(altArr[3]?.replace('zoom:', '') ?? '1') : 1
 
             if (!src || isImageExt(src)) {
                 return
@@ -29,7 +31,9 @@ export const registerLinkProcessor = (plugin: Plugin) => {
             let frame: HTMLIFrameElement | WebviewTag
             const options = {
                 profileKey: profileKey,
-                url: src
+                url: src,
+                userAgent: useragent,
+                zoomFactor: zoomFactor
             }
 
             if (Platform.isMobileApp) {

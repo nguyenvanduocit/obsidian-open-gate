@@ -1,6 +1,6 @@
 {
     "name": "obsidian-open-gate",
-    "version": "1.8.1",
+    "version": "1.8.2",
     "description": "Embedding any website to Obsidian, from now all, you have anything you need in one place.",
     "main": "main.js",
     "scripts": {
@@ -13,6 +13,7 @@
     "author": "",
     "license": "MIT",
     "devDependencies": {
+        "@codemirror/view": "^6.12.0",
         "@types/chrome": "^0.0.203",
         "@types/node": "^16.11.6",
         "@typescript-eslint/eslint-plugin": "5.29.0",

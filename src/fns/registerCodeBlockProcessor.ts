@@ -18,21 +18,33 @@ export function registerCodeBlockProcessor(plugin: Plugin) {
         let src = ''
         let height = 'fit-content'
         let profileKey = 'open-gate'
+        let userAgent = ''
+        let zoomFactor = 1
 
         for (const line of lines) {
             if (line.startsWith('http')) {
                 src = line.trim()
             } else if (line.startsWith('height:')) {
                 height = line.replace('height:', '').trim()
+                // if height is a number, add px
+                if (!isNaN(Number(height))) {
+                    height = height + 'px'
+                }
             } else if (line.startsWith('profile:')) {
                 profileKey = line.replace('profile:', '').trim()
+            } else if (line.startsWith('useragent:')) {
+                userAgent = line.replace('useragent:', '').trim()
+            } else if (line.startsWith('zoom:')) {
+                zoomFactor = parseFloat(line.replace('zoom:', '').trim())
             }
         }
 
         let frame: HTMLIFrameElement | WebviewTag
         const options = {
             profileKey: profileKey,
-            url: src
+            url: src,
+            userAgent: userAgent,
+            zoomFactor: zoomFactor
         }
 
         if (Platform.isMobileApp) {

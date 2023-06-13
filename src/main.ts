@@ -9,6 +9,7 @@ import { normalizeGateOption } from './fns/normalizeGateOption'
 import { ModalListGates } from './ModalListGates'
 import { registerCodeBlockProcessor } from './fns/registerCodeBlockProcessor'
 import { registerLinkProcessor } from './fns/registerLinkProcessor'
+import { examplePlugin } from './MCPlugin'
 
 interface PluginSetting {
     uuid: string
@@ -37,6 +38,8 @@ export default class OpenGatePlugin extends Plugin {
 
         registerCodeBlockProcessor(this)
         registerLinkProcessor(this)
+
+        this.registerEditorExtension([examplePlugin])
     }
 
     private async initFrames() {
