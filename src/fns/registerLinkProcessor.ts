@@ -2,6 +2,7 @@ import { Platform, Plugin } from 'obsidian'
 import { createWebviewTag } from './createWebviewTag'
 import { createIframe } from './createIframe'
 import WebviewTag = Electron.WebviewTag
+import getDefaultUserAgent from './getDefaultUserAgent'
 
 export const registerLinkProcessor = (plugin: Plugin) => {
     plugin.registerMarkdownPostProcessor((element, context) => {
@@ -21,7 +22,7 @@ export const registerLinkProcessor = (plugin: Plugin) => {
             }
 
             const profileKey = altArr ? altArr[1]?.replace('profile:', '') : 'open-gate'
-            const useragent = altArr ? altArr[2]?.replace('useragent:', '') : ''
+            const useragent = altArr ? altArr[2]?.replace('useragent:', '') : getDefaultUserAgent()
             const zoomFactor = altArr ? parseFloat(altArr[3]?.replace('zoom:', '') ?? '1') : 1
 
             if (!src || isImageExt(src)) {

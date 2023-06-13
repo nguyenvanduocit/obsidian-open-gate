@@ -2,6 +2,7 @@ import { App, Platform, Plugin } from 'obsidian'
 import { createIframe } from './createIframe'
 import { createWebviewTag } from './createWebviewTag'
 import WebviewTag = Electron.WebviewTag
+import getDefaultUserAgent from './getDefaultUserAgent'
 
 export function registerCodeBlockProcessor(plugin: Plugin) {
     plugin.registerMarkdownCodeBlockProcessor('gate', (sourceCode, el, ctx) => {
@@ -18,7 +19,7 @@ export function registerCodeBlockProcessor(plugin: Plugin) {
         let src = ''
         let height = 'fit-content'
         let profileKey = 'open-gate'
-        let userAgent = ''
+        let userAgent = getDefaultUserAgent()
         let zoomFactor = 1
 
         for (const line of lines) {
