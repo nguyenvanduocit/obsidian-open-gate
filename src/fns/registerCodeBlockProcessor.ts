@@ -3,6 +3,7 @@ import { createIframe } from './createIframe'
 import { createWebviewTag } from './createWebviewTag'
 import WebviewTag = Electron.WebviewTag
 import getDefaultUserAgent from './getDefaultUserAgent'
+import { createEmptyGateOption } from './createEmptyGateOption'
 
 export function registerCodeBlockProcessor(plugin: Plugin) {
     plugin.registerMarkdownCodeBlockProcessor('gate', (sourceCode, el, ctx) => {
@@ -16,37 +17,26 @@ export function registerCodeBlockProcessor(plugin: Plugin) {
             return
         }
 
-        let src = ''
-        let height = 'fit-content'
-        let profileKey = 'open-gate'
-        let userAgent = getDefaultUserAgent()
-        let zoomFactor = 1
-
+        const options = createEmptyGateOption()
+        let height = '300px'
         for (const line of lines) {
             if (line.startsWith('http')) {
-                src = line.trim()
+                options.url = line.trim()
             } else if (line.startsWith('height:')) {
                 height = line.replace('height:', '').trim()
-                // if height is a number, add px
                 if (!isNaN(Number(height))) {
                     height = height + 'px'
                 }
             } else if (line.startsWith('profile:')) {
-                profileKey = line.replace('profile:', '').trim()
+                options.profileKey = line.replace('profile:', '').trim()
             } else if (line.startsWith('useragent:')) {
-                userAgent = line.replace('useragent:', '').trim()
+                options.userAgent = line.replace('useragent:', '').trim()
             } else if (line.startsWith('zoom:')) {
-                zoomFactor = parseFloat(line.replace('zoom:', '').trim())
+                options.zoomFactor = parseFloat(line.replace('zoom:', '').trim())
             }
         }
 
         let frame: HTMLIFrameElement | WebviewTag
-        const options = {
-            profileKey: profileKey,
-            url: src,
-            userAgent: userAgent,
-            zoomFactor: zoomFactor
-        }
 
         if (Platform.isMobileApp) {
             frame = createIframe(options)

@@ -1,11 +1,7 @@
 import WebviewTag = Electron.WebviewTag
 
-export const createWebviewTag = (
-    params: Partial<GateFrameOption>
-): WebviewTag => {
-    const webviewTag = document.createElement(
-        'webview'
-    ) as unknown as WebviewTag
+export const createWebviewTag = (params: Partial<GateFrameOption>): WebviewTag => {
+    const webviewTag = document.createElement('webview') as unknown as WebviewTag
     webviewTag.setAttribute('allowpopups', 'true')
     webviewTag.setAttribute('partition', 'persist:' + params.profileKey)
     webviewTag.setAttribute('src', params.url ?? 'about:blank')
@@ -15,7 +11,11 @@ export const createWebviewTag = (
         webviewTag.setAttribute('useragent', params.userAgent)
     }
 
-    webviewTag.addEventListener('did-attach', () => {
+    webviewTag.addEventListener('dom-ready', async () => {
+        if (params.css) {
+            await webviewTag.insertCSS(params.css)
+        }
+
         if (params.zoomFactor) {
             webviewTag.setZoomFactor(params.zoomFactor)
         }

@@ -21,20 +21,16 @@ export const registerLinkProcessor = (plugin: Plugin) => {
                 height = height + 'px'
             }
 
-            const profileKey = altArr ? altArr[1]?.replace('profile:', '') : 'open-gate'
-            const useragent = altArr ? altArr[2]?.replace('useragent:', '') : getDefaultUserAgent()
-            const zoomFactor = altArr ? parseFloat(altArr[3]?.replace('zoom:', '') ?? '1') : 1
-
             if (!src || isImageExt(src)) {
                 return
             }
 
             let frame: HTMLIFrameElement | WebviewTag
             const options = {
-                profileKey: profileKey,
+                profileKey: altArr ? altArr[1]?.replace('profile:', '') : 'open-gate',
                 url: src,
-                userAgent: useragent,
-                zoomFactor: zoomFactor
+                userAgent: altArr ? altArr[2]?.replace('useragent:', '') : getDefaultUserAgent(),
+                zoomFactor: altArr ? parseFloat(altArr[3]?.replace('zoom:', '') ?? '1') : 1
             }
 
             if (Platform.isMobileApp) {

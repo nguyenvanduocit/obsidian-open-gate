@@ -12,4 +12,5 @@ declare type GateFrameOption = {
     position?: GateFrameOptionType
     userAgent?: string
     zoomFactor?: number
+    css?: string
 }

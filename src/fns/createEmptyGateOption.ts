@@ -1,3 +1,5 @@
+import getDefaultUserAgent from './getDefaultUserAgent'
+
 export const createEmptyGateOption = (): GateFrameOption => {
     return {
         id: '',
@@ -8,6 +10,6 @@ export const createEmptyGateOption = (): GateFrameOption => {
         profileKey: 'open-gate',
         url: '',
         zoomFactor: 1.0,
-        userAgent: ''
+        userAgent: getDefaultUserAgent()
     }
 }
