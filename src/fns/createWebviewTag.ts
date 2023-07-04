@@ -2,9 +2,12 @@ import WebviewTag = Electron.WebviewTag
 
 export const createWebviewTag = (params: Partial<GateFrameOption>): WebviewTag => {
     const webviewTag = document.createElement('webview') as unknown as WebviewTag
-    webviewTag.setAttribute('allowpopups', 'true')
     webviewTag.setAttribute('partition', 'persist:' + params.profileKey)
     webviewTag.setAttribute('src', params.url ?? 'about:blank')
+    webviewTag.setAttribute('httpreferrer', params.url ?? 'https://google.com')
+    webviewTag.setAttribute('crossorigin', 'anonymous')
+    webviewTag.setAttribute('allowpopups', 'true')
+    webviewTag.setAttribute('disablewebsecurity', 'true')
     webviewTag.addClass('open-gate-webview')
 
     if (params.userAgent && params.userAgent !== '') {
@@ -12,10 +15,6 @@ export const createWebviewTag = (params: Partial<GateFrameOption>): WebviewTag =
     }
 
     webviewTag.addEventListener('dom-ready', async () => {
-        if (params.css) {
-            await webviewTag.insertCSS(params.css)
-        }
-
         if (params.zoomFactor) {
             webviewTag.setZoomFactor(params.zoomFactor)
         }
