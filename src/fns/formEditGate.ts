@@ -2,11 +2,7 @@ import { Setting } from 'obsidian'
 import { getSvgIcon } from './getSvgIcon'
 import { normalizeGateOption } from './normalizeGateOption'
 
-export const formEditGate = (
-    contentEl: HTMLElement,
-    gateOptions: GateFrameOption,
-    onSubmit: (result: GateFrameOption) => void
-) => {
+export const formEditGate = (contentEl: HTMLElement, gateOptions: GateFrameOption, onSubmit: (result: GateFrameOption) => void) => {
     new Setting(contentEl)
         .setName('URL')
         .setClass('open-gate--form-field')
@@ -43,11 +39,9 @@ export const formEditGate = (
         .setClass('open-gate--form-field')
         .setDesc('If enabled, the gate will be pinned to the left bar')
         .addToggle((text) =>
-            text
-                .setValue(gateOptions.hasRibbon === true)
-                .onChange(async (value) => {
-                    gateOptions.hasRibbon = value
-                })
+            text.setValue(gateOptions.hasRibbon === true).onChange(async (value) => {
+                gateOptions.hasRibbon = value
+            })
         )
 
     new Setting(contentEl)
@@ -75,13 +69,9 @@ export const formEditGate = (
         .addToggle((text) =>
             text.setValue(false).onChange(async (value) => {
                 if (value) {
-                    advancedOptions.addClass(
-                        'open-gate--advanced-options--show'
-                    )
+                    advancedOptions.addClass('open-gate--advanced-options--show')
                 } else {
-                    advancedOptions.removeClass(
-                        'open-gate--advanced-options--show'
-                    )
+                    advancedOptions.removeClass('open-gate--advanced-options--show')
                 }
             })
         )
@@ -91,29 +81,33 @@ export const formEditGate = (
         .setClass('open-gate--form-field')
         .setDesc('Leave it blank if you are not sure')
         .addText((text) =>
-            text
-                .setValue(gateOptions.userAgent ?? '')
-                .onChange(async (value) => {
-                    gateOptions.userAgent = value
-                })
+            text.setValue(gateOptions.userAgent ?? '').onChange(async (value) => {
+                gateOptions.userAgent = value
+            })
+        )
+
+    new Setting(advancedOptions)
+        .setName('CSS')
+        .setClass('open-gate--form-field')
+        .setDesc('Leave it blank if you are not sure')
+        .addTextArea((text) =>
+            text.setValue(gateOptions.css ?? '').onChange(async (value) => {
+                gateOptions.css = value
+            })
         )
 
     new Setting(advancedOptions)
         .setName('Profile Key')
         .setClass('open-gate--form-field')
-        .setDesc(
-            "It's like profiles in Chrome, gates with the same profile can share storage"
-        )
+        .setDesc("It's like profiles in Chrome, gates with the same profile can share storage")
         .addText((text) =>
-            text
-                .setValue(gateOptions.profileKey ?? '')
-                .onChange(async (value) => {
-                    if (value === '') {
-                        value = 'open-gate'
-                    }
+            text.setValue(gateOptions.profileKey ?? '').onChange(async (value) => {
+                if (value === '') {
+                    value = 'open-gate'
+                }
 
-                    gateOptions.profileKey = value
-                })
+                gateOptions.profileKey = value
+            })
         )
 
     //zoomFactor
@@ -122,18 +116,14 @@ export const formEditGate = (
         .setClass('open-gate--form-field')
         .setDesc('Leave it blank if you are not sure')
         .addText((text) =>
-            text
-                .setValue(gateOptions.zoomFactor?.toString() ?? '0.0')
-                .onChange(async (value) => {
-                    gateOptions.zoomFactor = parseFloat(value)
-                })
+            text.setValue(gateOptions.zoomFactor?.toString() ?? '0.0').onChange(async (value) => {
+                gateOptions.zoomFactor = parseFloat(value)
+            })
         )
 
     new Setting(contentEl).addButton((btn) =>
         btn
-            .setButtonText(
-                gateOptions.id ? 'Update the gate' : 'Create new gate'
-            )
+            .setButtonText(gateOptions.id ? 'Update the gate' : 'Create new gate')
             .setCta()
             .onClick(async () => {
                 gateOptions = normalizeGateOption(gateOptions)
