@@ -25,16 +25,6 @@ export const formEditGate = (contentEl: HTMLElement, gateOptions: GateFrameOptio
         )
 
     new Setting(contentEl)
-        .setName('Icon')
-        .setClass('open-gate--form-field')
-        .setDesc('Leave it blank to enable auto-detect')
-        .addText((text) =>
-            text.setValue(gateOptions.icon).onChange(async (value) => {
-                gateOptions.icon = value
-            })
-        )
-
-    new Setting(contentEl)
         .setName('Pin to menu')
         .setClass('open-gate--form-field')
         .setDesc('If enabled, the gate will be pinned to the left bar')
@@ -59,10 +49,6 @@ export const formEditGate = (contentEl: HTMLElement, gateOptions: GateFrameOptio
                 })
         )
 
-    const advancedOptions = contentEl.createDiv({
-        cls: 'open-gate--advanced-options'
-    })
-
     new Setting(contentEl)
         .setName('Advanced Options')
         .setClass('open-gate--form-field')
@@ -76,11 +62,25 @@ export const formEditGate = (contentEl: HTMLElement, gateOptions: GateFrameOptio
             })
         )
 
+    const advancedOptions = contentEl.createDiv({
+        cls: 'open-gate--advanced-options'
+    })
+
+    new Setting(advancedOptions)
+        .setName('Icon')
+        .setClass('open-gate--form-field--column')
+        .setDesc('Leave it blank to enable auto-detect')
+        .addTextArea((text) =>
+            text.setValue(gateOptions.icon).onChange(async (value) => {
+                gateOptions.icon = value
+            })
+        )
+
     new Setting(advancedOptions)
         .setName('User Agent')
-        .setClass('open-gate--form-field')
+        .setClass('open-gate--form-field--column')
         .setDesc('Leave it blank if you are not sure')
-        .addText((text) =>
+        .addTextArea((text) =>
             text.setValue(gateOptions.userAgent ?? '').onChange(async (value) => {
                 gateOptions.userAgent = value
             })
@@ -88,7 +88,7 @@ export const formEditGate = (contentEl: HTMLElement, gateOptions: GateFrameOptio
 
     new Setting(advancedOptions)
         .setName('CSS')
-        .setClass('open-gate--form-field')
+        .setClass('open-gate--form-field--column')
         .setDesc('Leave it blank if you are not sure')
         .addTextArea((text) =>
             text.setValue(gateOptions.css ?? '').onChange(async (value) => {

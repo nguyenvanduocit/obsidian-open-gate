@@ -31,8 +31,21 @@
     text-decoration: underline;
 }
 
+.open-gate--form-field--column .setting-item-control,
+.open-gate--form-field--column .setting-item-control textarea,
 .open-gate--form-field .setting-item-control input[type='text'] {
     width: 100%;
+}
+
+.open-gate--form-field--column .setting-item-control textarea{
+    min-height: 80px;
+}
+
+.open-gate--form-field--column {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
 }
 
 .open-gate--advanced-options {
