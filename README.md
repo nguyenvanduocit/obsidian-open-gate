@@ -11,6 +11,7 @@ This plugin allows you to embedding any website to Obsidian, you have anything y
 -   Auto generate icon
 -   Embed any site that can not be embedded by iframe: Google Translate
 -   Support for mobile
+-   Custom CSS
 
 ## Usage
 
@@ -24,6 +25,10 @@ Then you will the the icon of then website in the left sidebar.
 ### Options
 
 ![](./stuff/img_1.png)
+
+Custom CSS
+
+![](./stuff/img_5.png)
 
 ### Add new Gate
 
