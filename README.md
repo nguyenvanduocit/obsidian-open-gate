@@ -1,6 +1,8 @@
 ![](./stuff/img.png)
 ![](./stuff/img_3.png)
 
+> Join our discord server: [join now](https://discord.gg/nqqrabWN)
+
 # Obsidian Open Gate
 
 This plugin allows you to embedding any website to Obsidian, you have anything you need in one place. You can browse website and take notes at the same time. e.g. Ask ChatGPT and copy the answer directly to your note.
@@ -54,7 +56,7 @@ height:300
 You can use link to embed any website.
 
 ~~~markdown
-![height:800px](https://12bit.vn)
+![height:800px](https://12bit.vn?open-gate=true)
 ~~~
 
 In this syntax, you can add `height:800px` to change the height of the gate. To set profile you set `profile:profile_name`.
@@ -62,11 +64,11 @@ In this syntax, you can add `height:800px` to change the height of the gate. To 
 ~~~markdown
 This is 12bit, but logged-in with account 1
 
-![height:800px;profile:account-1](https://12bit.vn)
+![height:800px;profile:account-1](https://12bit.vn?open-gate=true)
 
 This is 12bit, but logged-in with account 2
 
-![height:800px;profile:account-2](https://12bit.vn)
+![height:800px;profile:account-2](https://12bit.vn?open-gate=true)
 ~~~
 
 ### Quick switcher
