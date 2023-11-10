@@ -76,3 +76,6 @@ This is 12bit, but logged-in with account 2
 You can quickly open gates using a single shortcut. The default is `Ctrl+Shift+G` or `Cmd+Shift+G`. You can change it in the Hotkeys section of Obsidian.
 
 ![](./stuff/img_4.png)
+
+## Deployment
+
