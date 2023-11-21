@@ -39,7 +39,7 @@ export default class OpenGatePlugin extends Plugin {
         registerCodeBlockProcessor(this)
         registerLinkProcessor(this)
 
-        this.registerEditorExtension([examplePlugin])
+        //this.registerEditorExtension([examplePlugin])
     }
 
     private async initFrames() {
@@ -48,13 +48,9 @@ export default class OpenGatePlugin extends Plugin {
             await this.saveSettings()
 
             if (Object.keys(this.settings.gates).length === 0) {
-                new ModalOnBoarding(
-                    this.app,
-                    createEmptyGateOption(),
-                    async (gate: GateFrameOption) => {
-                        await this.addGate(gate)
-                    }
-                ).open()
+                new ModalOnBoarding(this.app, createEmptyGateOption(), async (gate: GateFrameOption) => {
+                    await this.addGate(gate)
+                }).open()
             }
         }
 
@@ -69,13 +65,9 @@ export default class OpenGatePlugin extends Plugin {
             id: `open-gate-create-new`,
             name: `Create new gate`,
             callback: async () => {
-                new ModalEditGate(
-                    this.app,
-                    createEmptyGateOption(),
-                    async (gate: GateFrameOption) => {
-                        await this.addGate(gate)
-                    }
-                ).open()
+                new ModalEditGate(this.app, createEmptyGateOption(), async (gate: GateFrameOption) => {
+                    await this.addGate(gate)
+                }).open()
             }
         })
 
@@ -84,13 +76,9 @@ export default class OpenGatePlugin extends Plugin {
             name: `List Gates`,
             hotkeys: [{ modifiers: ['Mod', 'Shift'], key: 'g' }],
             callback: async () => {
-                new ModalListGates(
-                    this.app,
-                    this.settings.gates,
-                    async (gate: GateFrameOption) => {
-                        await this.addGate(gate)
-                    }
-                ).open()
+                new ModalListGates(this.app, this.settings.gates, async (gate: GateFrameOption) => {
+                    await this.addGate(gate)
+                }).open()
             }
         })
     }
@@ -101,9 +89,7 @@ export default class OpenGatePlugin extends Plugin {
         if (!this.settings.gates.hasOwnProperty(gate.id)) {
             registerGate(this, gate)
         } else {
-            new Notice(
-                'This change will take effect after you reload Obsidian.'
-            )
+            new Notice('This change will take effect after you reload Obsidian.')
         }
 
         if (gate.profileKey === '' || gate.profileKey === undefined) {
@@ -145,9 +131,7 @@ export default class OpenGatePlugin extends Plugin {
         }
 
         for (const gateId in this.settings.gates) {
-            this.settings.gates[gateId] = normalizeGateOption(
-                this.settings.gates[gateId]
-            )
+            this.settings.gates[gateId] = normalizeGateOption(this.settings.gates[gateId])
         }
     }
 
@@ -157,9 +141,6 @@ export default class OpenGatePlugin extends Plugin {
 
     private generateUuid() {
         // generate uuid
-        return (
-            Math.random().toString(36).substring(2, 15) +
-            Math.random().toString(36).substring(2, 15)
-        )
+        return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
     }
 }
