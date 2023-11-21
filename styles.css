@@ -81,3 +81,14 @@ div[data-gate-id] .setting-item-name {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.open-gate--setting--gate .setting-item-info {
+    width: 100%;
+    overflow: hidden;
+}
+.open-gate--setting--gate .setting-item-description{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+

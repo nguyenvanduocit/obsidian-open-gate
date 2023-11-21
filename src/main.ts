@@ -43,19 +43,28 @@ export default class OpenGatePlugin extends Plugin {
     }
 
     private async initFrames() {
+        // Check if the UUID in the settings is empty
         if (this.settings.uuid === '') {
+            // Generate a new UUID and assign it to the settings
             this.settings.uuid = this.generateUuid()
+            // Save the updated settings
             await this.saveSettings()
 
+            // Check if there are no gates in the settings
             if (Object.keys(this.settings.gates).length === 0) {
+                // Open the onboarding modal to create a new gate
                 new ModalOnBoarding(this.app, createEmptyGateOption(), async (gate: GateFrameOption) => {
+                    // Add the created gate to the settings
                     await this.addGate(gate)
                 }).open()
             }
         }
 
+        // Iterate over all the gates in the settings
         for (const gateId in this.settings.gates) {
+            // Get the gate with the current ID
             const gate = this.settings.gates[gateId]
+            // Register the gate
             registerGate(this, gate)
         }
     }
