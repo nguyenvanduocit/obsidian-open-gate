@@ -38,8 +38,6 @@ function processNewSyntax(sourceCode: string): Node {
 
     let frame: HTMLIFrameElement | WebviewTag
 
-    console.log(options)
-
     if (Platform.isMobileApp) {
         frame = createIframe(options)
     } else {
