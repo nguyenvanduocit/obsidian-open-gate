@@ -53,10 +53,8 @@ height:300
 
 ### Use link
 
-You can use link to embed any website.
-
 ~~~markdown
-![height:800px](https://12bit.vn?open-gate=true)
+![height:800px](https://12bit.vn)
 ~~~
 
 In this syntax, you can add `height:800px` to change the height of the gate. To set profile you set `profile:profile_name`.
