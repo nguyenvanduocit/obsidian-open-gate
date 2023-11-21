@@ -35,15 +35,9 @@ export class SettingTab extends PluginSettingTab {
                 })
         }
 
-        containerEl
-            .createEl('button', { text: 'New gate', cls: 'mod-cta' })
-            .addEventListener('click', () => {
-                new ModalEditGate(
-                    this.app,
-                    createEmptyGateOption(),
-                    this.updateGate.bind(this)
-                ).open()
-            })
+        containerEl.createEl('button', { text: 'New gate', cls: 'mod-cta' }).addEventListener('click', () => {
+            new ModalEditGate(this.app, createEmptyGateOption(), this.updateGate.bind(this)).open()
+        })
 
         containerEl.createEl('hr')
 
@@ -53,7 +47,8 @@ export class SettingTab extends PluginSettingTab {
             const gate = this.plugin.settings.gates[gateId]
             const gateEl = settingContainerEl.createEl('div', {
                 attr: {
-                    'data-gate-id': gate.id
+                    'data-gate-id': gate.id,
+                    class: 'open-gate--setting--gate'
                 }
             })
 
@@ -68,11 +63,7 @@ export class SettingTab extends PluginSettingTab {
                 })
                 .addButton((button) => {
                     button.setButtonText('Edit').onClick(() => {
-                        new ModalEditGate(
-                            this.app,
-                            gate,
-                            this.updateGate.bind(this)
-                        ).open()
+                        new ModalEditGate(this.app, gate, this.updateGate.bind(this)).open()
                     })
                 })
         }
