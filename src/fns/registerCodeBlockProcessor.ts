@@ -1,51 +1,60 @@
-import { App, Platform, Plugin } from 'obsidian'
+import { Platform, Plugin } from 'obsidian'
+import { parse } from 'yaml'
 import { createIframe } from './createIframe'
 import { createWebviewTag } from './createWebviewTag'
 import WebviewTag = Electron.WebviewTag
-import getDefaultUserAgent from './getDefaultUserAgent'
 import { createEmptyGateOption } from './createEmptyGateOption'
+
+function processNewSyntax(sourceCode: string): Node {
+    const url = sourceCode.split('\n')[0]
+    sourceCode = sourceCode.replace(url, '').trim()
+
+    const options = createEmptyGateOption()
+    options.url = url
+
+    let height = '800px'
+
+    if (sourceCode.length !== 0) {
+        const data = parse(sourceCode)
+
+        if (typeof data !== 'object' || data === null || Object.keys(data).length === 0) {
+            return document.createTextNode(
+                "From version 1.10.0, the syntax of gate has changed. You have to use YAML format. Just like Obsidian's front matter. Sorry for the inconvenience."
+            )
+        }
+
+        if (data.height) {
+            // convert to string if it is number
+            if (typeof data.height === 'number') {
+                data.height = `${data.height}px`
+            }
+
+            height = data.height
+            delete data.height
+        }
+
+        Object.assign(options, data)
+    }
+
+    let frame: HTMLIFrameElement | WebviewTag
+
+    console.log(options)
+
+    if (Platform.isMobileApp) {
+        frame = createIframe(options)
+    } else {
+        frame = createWebviewTag(options)
+    }
+
+    frame.style.height = height
+
+    return frame
+}
 
 export function registerCodeBlockProcessor(plugin: Plugin) {
     plugin.registerMarkdownCodeBlockProcessor('gate', (sourceCode, el, ctx) => {
         el.addClass('open-gate-view')
-        const lines = sourceCode
-            .split('\n')
-            .filter((row) => row.length > 0)
-            .map((row) => row.trim())
-
-        if (lines.length === 0) {
-            return
-        }
-
-        const options = createEmptyGateOption()
-        let height = '300px'
-        for (const line of lines) {
-            if (line.startsWith('http')) {
-                options.url = line.trim()
-            } else if (line.startsWith('height:')) {
-                height = line.replace('height:', '').trim()
-                if (!isNaN(Number(height))) {
-                    height = height + 'px'
-                }
-            } else if (line.startsWith('profile:')) {
-                options.profileKey = line.replace('profile:', '').trim()
-            } else if (line.startsWith('useragent:')) {
-                options.userAgent = line.replace('useragent:', '').trim()
-            } else if (line.startsWith('zoom:')) {
-                options.zoomFactor = parseFloat(line.replace('zoom:', '').trim())
-            }
-        }
-
-        let frame: HTMLIFrameElement | WebviewTag
-
-        if (Platform.isMobileApp) {
-            frame = createIframe(options)
-        } else {
-            frame = createWebviewTag(options)
-        }
-
-        frame.style.height = height
-
+        const frame = processNewSyntax(sourceCode)
         el.appendChild(frame)
     })
 }

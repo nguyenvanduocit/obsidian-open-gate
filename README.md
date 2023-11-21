@@ -51,14 +51,6 @@ height:300
 ```
 ~~~
 
-### Use link
-
-~~~markdown
-![height:800px](https://12bit.vn)
-~~~
-
-In this syntax, you can add `height:800px` to change the height of the gate. To set profile you set `profile:profile_name`.
-
 ~~~markdown
 This is 12bit, but logged-in with account 1
 

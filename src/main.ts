@@ -1,4 +1,4 @@
-import { Notice, Platform, Plugin } from 'obsidian'
+import { Notice, Plugin } from 'obsidian'
 import { SettingTab } from './SetingTab'
 import { registerGate } from './fns/registerGate'
 import { ModalEditGate } from './ModalEditGate'
@@ -8,8 +8,6 @@ import { createEmptyGateOption } from './fns/createEmptyGateOption'
 import { normalizeGateOption } from './fns/normalizeGateOption'
 import { ModalListGates } from './ModalListGates'
 import { registerCodeBlockProcessor } from './fns/registerCodeBlockProcessor'
-import { registerLinkProcessor } from './fns/registerLinkProcessor'
-import { examplePlugin } from './MCPlugin'
 
 interface PluginSetting {
     uuid: string
@@ -37,9 +35,6 @@ export default class OpenGatePlugin extends Plugin {
         this.registerCommands()
 
         registerCodeBlockProcessor(this)
-        registerLinkProcessor(this)
-
-        //this.registerEditorExtension([examplePlugin])
     }
 
     private async initFrames() {
