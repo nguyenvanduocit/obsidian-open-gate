@@ -1,4 +1,4 @@
-import { Notice, Plugin } from 'obsidian'
+import { Modal, Notice, Plugin, TFile } from 'obsidian'
 import { SettingTab } from './SetingTab'
 import { registerGate } from './fns/registerGate'
 import { ModalEditGate } from './ModalEditGate'
@@ -8,6 +8,7 @@ import { createEmptyGateOption } from './fns/createEmptyGateOption'
 import { normalizeGateOption } from './fns/normalizeGateOption'
 import { ModalListGates } from './ModalListGates'
 import { registerCodeBlockProcessor } from './fns/registerCodeBlockProcessor'
+import { stringify } from 'yaml'
 
 interface PluginSetting {
     uuid: string
