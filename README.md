@@ -23,7 +23,6 @@ This plugin allows you to embedding any website to Obsidian, you have anything y
 
 Then you will the the icon of then website in the left sidebar.
 
-
 ### Options
 
 ![](./stuff/img_1.png)
@@ -40,18 +39,18 @@ Add new gate does not require to restart Obsidian. But editing and deleting gate
 
 ### Use Code block
 
-You can use code
+You can use a code block with the language set to `gate` to embed any website directly within a note, including custom css.
 
-You can use code block to embed any website.
-
-~~~markdown
-```gate  
+````markdown
+```gate
 https://12bit.vn
 height:300
+css: |
+   html { filter: invert(90%) hue-rotate(180deg)!important; }
 ```
-~~~
+````
 
-~~~markdown
+```markdown
 This is 12bit, but logged-in with account 1
 
 ![height:800px;profile:account-1](https://12bit.vn?open-gate=true)
@@ -59,7 +58,7 @@ This is 12bit, but logged-in with account 1
 This is 12bit, but logged-in with account 2
 
 ![height:800px;profile:account-2](https://12bit.vn?open-gate=true)
-~~~
+```
 
 ### Quick switcher
 
@@ -68,4 +67,3 @@ You can quickly open gates using a single shortcut. The default is `Ctrl+Shift+G
 ![](./stuff/img_4.png)
 
 ## Deployment
-
