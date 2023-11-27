@@ -6,8 +6,14 @@ import WebviewTag = Electron.WebviewTag
 import { createEmptyGateOption } from './createEmptyGateOption'
 
 function processNewSyntax(sourceCode: string): Node {
-    const url = sourceCode.split('\n')[0]
-    sourceCode = sourceCode.replace(url, '').trim()
+    const options = createEmptyGateOption()
+
+    // we want user follow the yaml format, but sometime, it's easier for user to just type the url in the first line, so we support that
+    const firstLine = sourceCode.split('\n')[0]
+    if (firstLine.startsWith('http')) {
+        options.url = firstLine
+        sourceCode = sourceCode.replace(firstLine, '').trim()
+    }
 
     // Replace tabs with spaces at the start of each line, because YAML doesn't support tabs
     sourceCode = sourceCode.replace(/^\t+/gm, (match) => '  '.repeat(match.length))
@@ -26,9 +32,6 @@ function processNewSyntax(sourceCode: string): Node {
     if (typeof data !== 'object' || data === null || Object.keys(data).length === 0) {
         return createErrorMessage()
     }
-
-    const options = createEmptyGateOption()
-    options.url = url
 
     let height = '800px'
     if (data.height) {
