@@ -26,7 +26,7 @@ function processNewSyntax(sourceCode: string): Node {
     try {
         data = parse(sourceCode)
     } catch (error) {
-        return createErrorMessage()
+        return createErrorMessage(error)
     }
 
     if (typeof data !== 'object' || data === null || Object.keys(data).length === 0) {
@@ -44,10 +44,28 @@ function processNewSyntax(sourceCode: string): Node {
     return createFrame(options, height)
 }
 
-function createErrorMessage(): Node {
-    return document.createTextNode(
-        "Starting from version 1.10.0, the syntax of 'gate' has been updated. You are now required to use the YAML format, similar to Obsidian's front matter. We apologize for any inconvenience this may cause."
-    )
+function createErrorMessage(error?: Error): Node {
+    const div = document.createElement('div')
+
+    const messageText = 'The syntax has been updated. Please use the YAML format.'
+    const messageTextNode = document.createTextNode(messageText)
+    div.appendChild(messageTextNode)
+
+    if (error) {
+        const errorDetailsText = `\nError details: ${error.message}`
+        const errorDetailsTextNode = document.createTextNode(errorDetailsText)
+        div.appendChild(errorDetailsTextNode)
+    }
+
+    const linkText = '\nRead more about YAML here.'
+    const linkTextNode = document.createTextNode(linkText)
+    const linkNode = document.createElement('a')
+    linkNode.href = 'https://yaml.org/spec/1.2/spec.html'
+    linkNode.textContent = 'YAML Syntax'
+    div.appendChild(linkTextNode)
+    div.appendChild(linkNode)
+
+    return div
 }
 
 function createFrame(options: GateFrameOption, height: string): HTMLIFrameElement | WebviewTag {
