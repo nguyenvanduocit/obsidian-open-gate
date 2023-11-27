@@ -46,16 +46,6 @@ function processNewSyntax(sourceCode: string): Node {
 
     frame.style.height = height
 
-    if (frame instanceof HTMLIFrameElement) {
-        // do nothing to do
-    } else {
-        frame.addEventListener('dom-ready', async () => {
-            if (options?.css) {
-                await (frame as WebviewTag).insertCSS(options.css)
-            }
-        })
-    }
-
     return frame
 }
 

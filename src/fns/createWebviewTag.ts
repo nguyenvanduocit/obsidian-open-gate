@@ -29,6 +29,10 @@ export const createWebviewTag = (params: Partial<GateFrameOption>): WebviewTag =
         if (params.zoomFactor) {
             webviewTag.setZoomFactor(params.zoomFactor)
         }
+
+        if (params?.css) {
+            await webviewTag.insertCSS(params.css)
+        }
     })
 
     return webviewTag

@@ -73,10 +73,6 @@ export class GateView extends ItemView {
                         console.log('open-gate-open:'+e.target.href);
                     }
                 });`)
-
-                if (this.options?.css) {
-                    await frame.insertCSS(this.options.css)
-                }
             })
         }
     }
