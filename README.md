@@ -44,7 +44,7 @@ You can use a code block with the language set to `gate` to embed any website di
 ````markdown
 ```gate
 https://12bit.vn
-height:300
+height: 300
 css: |
    html { filter: invert(90%) hue-rotate(180deg)!important; }
 ```
