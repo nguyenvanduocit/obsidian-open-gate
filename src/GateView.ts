@@ -2,7 +2,9 @@ import { ItemView, WorkspaceLeaf, Menu } from 'obsidian'
 import { createWebviewTag } from './fns/createWebviewTag'
 import { Platform } from 'obsidian'
 import { createIframe } from './fns/createIframe'
+import { clipboard } from 'electron'
 import WebviewTag = Electron.WebviewTag
+
 export class GateView extends ItemView {
     private readonly options: GateFrameOption
     private frame: WebviewTag | HTMLIFrameElement
@@ -125,6 +127,17 @@ export class GateView extends ItemView {
                 } else {
                     this.frame.openDevTools()
                 }
+            })
+        })
+        menu.addItem((item) => {
+            item.setTitle('Copy Page URL')
+            item.setIcon('clipboard-copy')
+            item.onClick(() => {
+                if (this.frame instanceof HTMLIFrameElement) {
+                    return
+                }
+
+                clipboard.writeText(this.frame.getURL())
             })
         })
     }
