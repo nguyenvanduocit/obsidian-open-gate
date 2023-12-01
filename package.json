@@ -1,6 +1,6 @@
 {
   "name": "obsidian-open-gate",
-  "version": "1.9.6",
+  "version": "1.9.7",
   "description": "Embedding any website to Obsidian, from now all, you have anything you need in one place.",
   "main": "main.js",
   "scripts": {
