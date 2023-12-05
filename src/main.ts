@@ -99,10 +99,6 @@ export default class OpenGatePlugin extends Plugin {
         this.registerObsidianProtocolHandler('opengate', async (data) => {
             const { title, url } = data
 
-            if (!title || !url) {
-                new Notice(`Please provide both 'title' and 'url' params when using a obsidian://opengate link`)
-            }
-
             const gateId = Object.keys(this.settings.gates).find((id) => this.settings.gates[id].title.toLowerCase() === title.toLowerCase())
             if (gateId) {
                 const gate = this.settings.gates[gateId]
@@ -110,9 +106,11 @@ export default class OpenGatePlugin extends Plugin {
                 const leaf = await openView(this.app.workspace, gate.id, gate.position)
                 const gateview = leaf.view as GateView
 
-                gateview.onFrameReady(() => {
-                    gateview.setUrl(url)
-                })
+                if (url) {
+                    gateview.onFrameReady(() => {
+                        gateview.setUrl(url)
+                    })
+                }
             } else {
                 new Notice(`Gate with title '${title}' not found.`)
             }
