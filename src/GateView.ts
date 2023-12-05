@@ -53,42 +53,13 @@ export class GateView extends ItemView {
         }
 
         this.contentEl.appendChild(this.frame as unknown as HTMLElement)
-
-        if (this.frame instanceof HTMLIFrameElement) {
-            // do nothing to do
-        } else {
-            this.frame.addEventListener('will-navigate', this.webViewWillNavigate.bind(this))
-            this.frame.addEventListener('console-message', async (event: Electron.ConsoleMessageEvent) => {
-                if (event.message.startsWith('open-gate-open:')) {
-                    const url = event.message.replace('open-gate-open:', '')
-                    window.open(url)
-                }
-            })
-
-            this.frame.addEventListener('dom-ready', async () => {
-                // typescript indicates type
-                const frame = this.frame as unknown as WebviewTag
-                await frame.executeJavaScript(`
-                document.addEventListener('click', (e) => {
-                    if (e.target instanceof HTMLAnchorElement && e.target.target === '_blank') {
-                        e.preventDefault();
-                        console.log('open-gate-open:'+e.target.href);
-                    }
-                });`)
-            })
-        }
     }
 
     onunload(): void {
         this.frame.remove()
-        if (this.frame instanceof HTMLIFrameElement) {
-        } else {
-            this.frame.removeEventListener('will-navigate', this.webViewWillNavigate.bind(this))
-        }
+
         super.onunload()
     }
-
-    webViewWillNavigate(event: Electron.Event, url: string): void {}
 
     onPaneMenu(menu: Menu, source: string): void {
         super.onPaneMenu(menu, source)
