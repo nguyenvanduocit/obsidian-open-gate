@@ -1,14 +1,10 @@
 ![](./stuff/img.png)
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
-![](./stuff/img_3.png)
 
 > Join our discord server: [join now](https://discord.gg/nqqrabWN)
 
 # Obsidian Open Gate
 
-This plugin allows you to embedding any website to Obsidian, you have anything you need in one place. You can browse website and take notes at the same time. e.g. Ask ChatGPT and copy the answer directly to your note.
+Obsidian Open Gate is a plugin for Obsidian, a popular note-taking app. This plugin allows you to embed any website into Obsidian, providing a seamless browsing and note-taking experience. Whether you're researching, studying, or just browsing the web, Obsidian Open Gate keeps everything you need in one place.
 
 ## Features
 
@@ -20,23 +16,20 @@ This plugin allows you to embedding any website to Obsidian, you have anything y
 
 ## Usage
 
-1.  just type `New gate` in command palette
-1.  type the url and title of the site you want to embed
-1.  click `Create`
+To use Obsidian Open Gate, follow these steps:
 
-Then you will the the icon of then website in the left sidebar.
+1. Open the command palette and type `New gate`.
+2. Enter the URL and title of the website you want to embed.
+3. Click `Create`.
 
-### Options
+![](./stuff/img_2.png)
+
+You will then see the icon of the website in the left sidebar of Obsidian. Clicking on it.
+
+### Simple Options
 
 ![](./stuff/img_1.png)
 
-Custom CSS
-
-![](./stuff/img_5.png)
-
-### Add new Gate
-
-![](./stuff/img_2.png)
 
 Add new gate does not require to restart Obsidian. But editing and deleting gate requires to restart Obsidian.
 
@@ -60,6 +53,21 @@ You can quickly open gates using a single shortcut. The default is `Ctrl+Shift+G
 ![](./stuff/img_4.png)
 
 ## Deployment
+
+This project uses `bun` for building. To build the plugin, follow these steps:
+
+1. Ensure you have `bun` installed.
+2. Run `bun install`.
+3. Navigate to the project directory and run `bun run build`.
+
+## Contributing
+
+We welcome contributions from everyone. If you're interested in contributing, here's how you can do it:
+
+1. Fork the repository.
+2. Create a new branch for your changes.
+3. Make your changes in your branch.
+4. Submit a pull request.
 
 ## Contributors ✨
 
