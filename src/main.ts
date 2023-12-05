@@ -106,11 +106,9 @@ export default class OpenGatePlugin extends Plugin {
                 const leaf = await openView(this.app.workspace, gate.id, gate.position)
                 const gateview = leaf.view as GateView
 
-                if (url) {
-                    gateview.onFrameReady(() => {
-                        gateview.setUrl(url)
-                    })
-                }
+                gateview.onFrameReady(() => {
+                    gateview.setUrl(url || gate.url)
+                })
             } else {
                 new Notice(`Gate with title '${title}' not found.`)
             }
