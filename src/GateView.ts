@@ -9,12 +9,15 @@ export class GateView extends ItemView {
     private readonly options: GateFrameOption
     private frame: WebviewTag | HTMLIFrameElement
     private readonly useIframe: boolean = false
+    private frameReadyCallbacks: Function[]
+    private isFrameReady: boolean = false
 
     constructor(leaf: WorkspaceLeaf, options: GateFrameOption) {
         super(leaf)
         this.navigation = false
         this.options = options
         this.useIframe = Platform.isMobileApp
+        this.frameReadyCallbacks = []
     }
 
     addActions(): void {
@@ -77,6 +80,15 @@ export class GateView extends ItemView {
                 });`)
             })
         }
+
+        // Notify all subscribers that the frame is now ready
+        // This should only happen once per frame lifecycle
+        this.frame.addEventListener('dom-ready', async () => {
+            if (!this.isFrameReady) {
+                this.isFrameReady = true
+                this.frameReadyCallbacks.forEach((callback) => callback())
+            }
+        })
     }
 
     onunload(): void {
@@ -156,5 +168,26 @@ export class GateView extends ItemView {
         }
 
         return this.options?.icon ?? 'globe'
+    }
+
+    /**
+     * Allows us to run code when the frame has loaded.
+     * Note that the frame may already be loaded in which case we will directly call the callback instead of waiting for an event.
+     * @param callback
+     */
+    onFrameReady(callback: Function) {
+        if (this.isFrameReady) {
+            callback()
+        } else {
+            this.frameReadyCallbacks.push(callback)
+        }
+    }
+
+    /**
+     * This allows us to dynamically route the frame to a different URL
+     * @param url
+     */
+    setUrl(url: string) {
+        this.frame.setAttribute('src', url)
     }
 }
