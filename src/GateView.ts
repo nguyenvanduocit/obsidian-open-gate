@@ -20,7 +20,7 @@ export class GateView extends ItemView {
     addActions(): void {
         this.addAction('refresh-ccw', 'Reload', () => {
             if (this.frame instanceof HTMLIFrameElement) {
-                this.frame.src = this.frame.src
+                this.frame.contentWindow?.location.reload()
             } else {
                 this.frame.reload()
             }
@@ -68,7 +68,7 @@ export class GateView extends ItemView {
             item.setIcon('refresh-ccw')
             item.onClick(() => {
                 if (this.frame instanceof HTMLIFrameElement) {
-                    this.frame.src = this.frame.src
+                    this.frame.contentWindow?.location.reload()
                 } else {
                     this.frame.reload()
                 }
