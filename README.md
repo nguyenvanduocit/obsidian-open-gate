@@ -50,16 +50,6 @@ css: |
 ```
 ````
 
-```markdown
-This is 12bit, but logged-in with account 1
-
-![height:800px;profile:account-1](https://12bit.vn?open-gate=true)
-
-This is 12bit, but logged-in with account 2
-
-![height:800px;profile:account-2](https://12bit.vn?open-gate=true)
-```
-
 ### Quick switcher
 
 You can quickly open gates using a single shortcut. The default is `Ctrl+Shift+G` or `Cmd+Shift+G`. You can change it in the Hotkeys section of Obsidian.
