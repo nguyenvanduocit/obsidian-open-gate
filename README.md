@@ -1,6 +1,6 @@
 ![](./stuff/img.png)
 
-> Join our discord server: [join now](https://discord.gg/nqqrabWN)
+> Join our discord server: [join now](https://discord.gg/wpyAsJMd)
 
 # Obsidian Open Gate
 
