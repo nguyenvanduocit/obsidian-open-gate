@@ -23,7 +23,6 @@ export const createWebviewTag = (params: Partial<GateFrameOption>): WebviewTag =
         webviewTag.setAttribute('useragent', params.userAgent)
     }
 
-    // Add event listener for 'dom-ready' event
     webviewTag.addEventListener('dom-ready', async () => {
         // Set zoom factor if provided
         if (params.zoomFactor) {
