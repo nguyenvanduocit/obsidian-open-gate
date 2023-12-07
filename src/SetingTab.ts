@@ -74,7 +74,7 @@ export class SettingTab extends PluginSettingTab {
             attr: {
                 style: 'display: block; margin-bottom: 5px'
             },
-            text: 'When delete or edit a gate, you need to reload Obsidian to see the changes.'
+            text: 'When you delete or edit a gate, you need to reload Obsidian to see the changes.'
         })
 
         containerEl.createEl('small', {
