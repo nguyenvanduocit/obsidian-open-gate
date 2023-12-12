@@ -36,8 +36,29 @@ export default class OpenGatePlugin extends Plugin {
         this.addSettingTab(new SettingTab(this.app, this))
         this.registerCommands()
         this.registerProtocol()
-
+        this.setupEditorMenu()
         registerCodeBlockProcessor(this)
+    }
+
+    setupEditorMenu() {
+        this.registerEvent(
+            this.app.workspace.on('editor-menu', (menu, editor) => {
+                const selection = editor.getSelection()
+                if (selection.length === 0) return
+                const linkMatch = selection.match(/\[([^\]]+)\]\(([^)]+)\)/)
+                if (!linkMatch) return
+                menu.addItem((item) => {
+                    item.setTitle('Convert to Gate Link').onClick(async () => {
+                        const link = linkMatch[2]
+                        if (!link.startsWith('http')) return
+
+                        const title = linkMatch[1]
+                        const gateLink = `[${title}](obsidian://opengate?title=${encodeURIComponent(title)}&url=${encodeURIComponent(link)})`
+                        editor.replaceSelection(gateLink)
+                    })
+                })
+            })
+        )
     }
 
     private async initGates() {
@@ -156,6 +177,7 @@ export default class OpenGatePlugin extends Plugin {
             gateView?.setUrl(data.url)
         })
     }
+
     async addGate(gate: GateFrameOption) {
         if (!this.settings.gates.hasOwnProperty(gate.id)) {
             registerGate(this, gate)
