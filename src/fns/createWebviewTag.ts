@@ -5,7 +5,7 @@ const DEFAULT_URL = 'about:blank'
 const GOOGLE_URL = 'https://google.com'
 const OPEN_GATE_WEBVIEW_CLASS = 'open-gate-webview'
 
-export const createWebviewTag = (params: Partial<GateFrameOption>): WebviewTag => {
+export const createWebviewTag = (params: Partial<GateFrameOption>, onReady?: () => void): WebviewTag => {
     // Create a new webview tag
     const webviewTag = document.createElement('webview') as unknown as WebviewTag
 
@@ -32,6 +32,8 @@ export const createWebviewTag = (params: Partial<GateFrameOption>): WebviewTag =
         if (params?.css) {
             await webviewTag.insertCSS(params.css)
         }
+
+        onReady?.call(null)
     })
 
     return webviewTag

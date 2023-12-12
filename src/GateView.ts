@@ -49,27 +49,24 @@ export class GateView extends ItemView {
         this.contentEl.empty()
         this.contentEl.addClass('open-gate-view')
 
-        if (this.useIframe) {
-            this.frame = createIframe(this.options)
-        } else {
-            this.frame = createWebviewTag(this.options)
-        }
-
-        this.contentEl.appendChild(this.frame as unknown as HTMLElement)
-
-        // Notify all subscribers that the frame is now ready
-        // This should only happen once per frame lifecycle
-        this.frame.addEventListener('dom-ready', async () => {
+        const onReady = () => {
             if (!this.isFrameReady) {
                 this.isFrameReady = true
                 this.frameReadyCallbacks.forEach((callback) => callback())
             }
-        })
+        }
+
+        if (this.useIframe) {
+            this.frame = createIframe(this.options, onReady)
+        } else {
+            this.frame = createWebviewTag(this.options, onReady)
+        }
+
+        this.contentEl.appendChild(this.frame as unknown as HTMLElement)
     }
 
     onunload(): void {
         this.frame.remove()
-
         super.onunload()
     }
 
@@ -112,15 +109,31 @@ export class GateView extends ItemView {
                 }
             })
         })
+
         menu.addItem((item) => {
             item.setTitle('Copy Page URL')
             item.setIcon('clipboard-copy')
             item.onClick(() => {
                 if (this.frame instanceof HTMLIFrameElement) {
+                    clipboard.writeText(this.frame.src)
                     return
                 }
 
                 clipboard.writeText(this.frame.getURL())
+            })
+        })
+
+        // Open in Default Browser
+        menu.addItem((item) => {
+            item.setTitle('Open in browser')
+            item.setIcon('globe')
+            item.onClick(() => {
+                if (this.frame instanceof HTMLIFrameElement) {
+                    window.open(this.frame.src)
+                    return
+                }
+
+                window.open(this.frame.getURL())
             })
         })
     }
@@ -162,6 +175,10 @@ export class GateView extends ItemView {
         if (this.frame instanceof HTMLIFrameElement) {
             this.frame.src = url
         } else {
+            if (this.frame.isLoading()) {
+                this.frame.stop()
+            }
+
             await this.frame.loadURL(url)
         }
     }

@@ -73,7 +73,7 @@ export default class OpenGatePlugin extends Plugin {
                 id: 'temp-gate',
                 title: 'Temp Gate',
                 icon: 'globe',
-                url: '_blank'
+                url: 'about:blank'
             })
         )
     }
@@ -150,9 +150,11 @@ export default class OpenGatePlugin extends Plugin {
             }
         }
 
-        const tempGate = await openView(this.app.workspace, 'temp-gate')
-        const gateView = tempGate.view as GateView
-        await gateView.setUrl(data.url)
+        const gate = await openView(this.app.workspace, targetGate?.id || 'temp-gate')
+        const gateView = gate.view as GateView
+        gateView?.onFrameReady(() => {
+            gateView?.setUrl(data.url)
+        })
     }
     async addGate(gate: GateFrameOption) {
         if (!this.settings.gates.hasOwnProperty(gate.id)) {
