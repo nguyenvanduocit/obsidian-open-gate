@@ -47,16 +47,29 @@ export default class OpenGatePlugin extends Plugin {
                 if (selection.length === 0) return
                 const linkMatch = selection.match(/\[([^\]]+)\]\(([^)]+)\)/)
                 if (!linkMatch) return
-                menu.addItem((item) => {
-                    item.setTitle('Convert to Gate Link').onClick(async () => {
-                        const link = linkMatch[2]
-                        if (!link.startsWith('http')) return
 
-                        const title = linkMatch[1]
-                        const gateLink = `[${title}](obsidian://opengate?title=${encodeURIComponent(title)}&url=${encodeURIComponent(link)})`
-                        editor.replaceSelection(gateLink)
+                const link = linkMatch[2]
+                const title = linkMatch[1]
+
+                if (link.startsWith('obsidian://opengate')) {
+                    menu.addItem((item) => {
+                        item.setTitle('Convert to normal link').onClick(async () => {
+                            // get the url parameter from the link
+                            const urlMatch = link.match(/url=([^&]+)/)
+                            if (!urlMatch) return
+                            const url = decodeURIComponent(urlMatch[1])
+                            const normalLink = `[${title}](${url})`
+                            editor.replaceSelection(normalLink)
+                        })
                     })
-                })
+                } else {
+                    menu.addItem((item) => {
+                        item.setTitle('Convert to Gate Link').onClick(async () => {
+                            const gateLink = `[${title}](obsidian://opengate?title=${encodeURIComponent(title)}&url=${encodeURIComponent(link)})`
+                            editor.replaceSelection(gateLink)
+                        })
+                    })
+                }
             })
         )
     }

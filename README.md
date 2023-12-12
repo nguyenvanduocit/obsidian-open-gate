@@ -90,6 +90,13 @@ If no Gate is found, the plugin will open a temporary Gate with the provided URL
 
 The usage is exactly the same as the pre-configured Gate, but you no need to match the title or url.
 
+#### Convert link
+
+Select a link in your note, then right click and select `Convert to Gate Link`. The plugin will convert the link to a Gate link.
+
+If the link is already a Gate link, the plugin will convert it back to a normal link.
+
+
 ## Usage: Code Block
 
 You can use a code block with the language set to `gate` to embed any website directly within a note, including custom css.
