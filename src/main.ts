@@ -1,4 +1,4 @@
-import { Modal, Notice, Plugin, TFile } from 'obsidian'
+import { Notice, Plugin } from 'obsidian'
 import { SettingTab } from './SetingTab'
 import { registerGate } from './fns/registerGate'
 import { ModalEditGate } from './ModalEditGate'
@@ -8,7 +8,8 @@ import { createEmptyGateOption } from './fns/createEmptyGateOption'
 import { normalizeGateOption } from './fns/normalizeGateOption'
 import { ModalListGates } from './ModalListGates'
 import { registerCodeBlockProcessor } from './fns/registerCodeBlockProcessor'
-import { stringify } from 'yaml'
+import { openView } from './fns/openView'
+import { GateView } from './GateView'
 
 interface PluginSetting {
     uuid: string
@@ -34,6 +35,7 @@ export default class OpenGatePlugin extends Plugin {
         await this.initFrames()
         this.addSettingTab(new SettingTab(this.app, this))
         this.registerCommands()
+        this.registerProtocol()
 
         registerCodeBlockProcessor(this)
     }
@@ -84,6 +86,31 @@ export default class OpenGatePlugin extends Plugin {
                 new ModalListGates(this.app, this.settings.gates, async (gate: GateFrameOption) => {
                     await this.addGate(gate)
                 }).open()
+            }
+        })
+    }
+
+    /**
+     * Register the "opengate" action to Obsidian.
+     *
+     * We will attempt to open a gate based on the provided title and navigate to the provided URL
+     */
+    private registerProtocol() {
+        this.registerObsidianProtocolHandler('opengate', async (data) => {
+            const { title, url } = data
+
+            const gateId = Object.keys(this.settings.gates).find((id) => this.settings.gates[id].title.toLowerCase() === title.toLowerCase())
+            if (gateId) {
+                const gate = this.settings.gates[gateId]
+
+                const leaf = await openView(this.app.workspace, gate.id, gate.position)
+                const gateview = leaf.view as GateView
+
+                gateview.onFrameReady(() => {
+                    gateview.setUrl(url || gate.url)
+                })
+            } else {
+                new Notice(`Gate with title '${title}' not found.`)
             }
         })
     }

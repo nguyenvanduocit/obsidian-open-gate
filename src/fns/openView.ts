@@ -1,27 +1,19 @@
 import { Workspace, WorkspaceLeaf } from 'obsidian'
 
-export const openView = async (
-    workspace: Workspace,
-    id: string,
-    position?: GateFrameOptionType
-): Promise<void> => {
+export const openView = async (workspace: Workspace, id: string, position?: GateFrameOptionType): Promise<WorkspaceLeaf> => {
     let leaf: WorkspaceLeaf
     let leafs = workspace.getLeavesOfType(id)
     if (leafs.length > 0) {
         workspace.revealLeaf(leafs[0])
-        return
+        return leafs[0]
     }
 
     leaf = await createView(workspace, id, position)
     workspace.revealLeaf(leaf)
-    return
+    return leaf
 }
 
-const createView = async (
-    workspace: Workspace,
-    id: string,
-    position?: GateFrameOptionType
-) => {
+const createView = async (workspace: Workspace, id: string, position?: GateFrameOptionType) => {
     let leaf: WorkspaceLeaf | undefined
     switch (position) {
         case 'left':
