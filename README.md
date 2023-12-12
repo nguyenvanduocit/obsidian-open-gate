@@ -86,9 +86,9 @@ The gate will have them same configuration as the one you configured in the sett
 
 #### Open a temporary Gate
 
-If no Gate is found, the plugin will open a temporary Gate with the provided URL, this gate will not be saved and will be deleted when you close it.
+If no Gate is found, the plugin will open a temporary Gate with the provided URL, this gate will not be saved and will be deleted when you close it. To prevent multiple temporary Gates from being opened, which can lead to performance issues like Chrome tabs, the plugin only allow you to open one temporary Gate at a time.
 
-The feature is under development, will be available in the next release.
+The usage is exactly the same as the pre-configured Gate, but you no need to match the title or url.
 
 ## Usage: Code Block
 
