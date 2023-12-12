@@ -89,11 +89,11 @@ export class GateView extends ItemView {
         menu.addItem((item) => {
             item.setTitle('Home page')
             item.setIcon('home')
-            item.onClick(() => {
+            item.onClick(async () => {
                 if (this.frame instanceof HTMLIFrameElement) {
                     this.frame.src = this.options?.url ?? 'about:blank'
                 } else {
-                    this.frame.loadURL(this.options?.url ?? 'about:blank')
+                    await this.frame.loadURL(this.options?.url ?? 'about:blank')
                 }
             })
         })
@@ -158,7 +158,11 @@ export class GateView extends ItemView {
      * This allows us to dynamically route the frame to a different URL
      * @param url
      */
-    setUrl(url: string) {
-        this.frame.setAttribute('src', url)
+    async setUrl(url: string) {
+        if (this.frame instanceof HTMLIFrameElement) {
+            this.frame.src = url
+        } else {
+            await this.frame.loadURL(url)
+        }
     }
 }

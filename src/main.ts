@@ -65,6 +65,17 @@ export default class OpenGatePlugin extends Plugin {
             // Register the gate
             registerGate(this, gate)
         }
+
+        // this view is used to open gates from the protocol handler
+        registerGate(
+            this,
+            normalizeGateOption({
+                id: 'temp-gate',
+                title: 'Temp Gate',
+                icon: 'globe',
+                url: '_blank'
+            })
+        )
     }
 
     private registerCommands() {
@@ -137,29 +148,12 @@ export default class OpenGatePlugin extends Plugin {
                 new Notice('Missing url parameter')
                 return
             }
-
-            // no gate with url found, try to create a new one
-            targetGate = normalizeGateOption({
-                url: data.url,
-                title: data.title,
-                profileKey: data.profileKey,
-                icon: `globe`
-            })
-
-            if (!isViewExist(this.app.workspace, targetGate.id)) {
-                this.createTempGate(targetGate)
-            }
         }
 
-        await openView(this.app.workspace, targetGate.id)
+        const tempGate = await openView(this.app.workspace, 'temp-gate')
+        const gateView = tempGate.view as GateView
+        await gateView.setUrl(data.url)
     }
-
-    createTempGate(gate: GateFrameOption) {
-        this.registerView(gate.id, (leaf) => {
-            return new GateView(leaf, gate!)
-        })
-    }
-
     async addGate(gate: GateFrameOption) {
         if (!this.settings.gates.hasOwnProperty(gate.id)) {
             registerGate(this, gate)

@@ -33,6 +33,7 @@ const createView = async (workspace: Workspace, id: string, position?: GateFrame
             leaf = workspace.getRightLeaf(false)
             break
     }
+
     await leaf?.setViewState({ type: id, active: true })
     return leaf
 }
