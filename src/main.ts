@@ -142,7 +142,8 @@ export default class OpenGatePlugin extends Plugin {
             targetGate = normalizeGateOption({
                 url: data.url,
                 title: data.title,
-                profileKey: data.profileKey
+                profileKey: data.profileKey,
+                icon: `globe`
             })
 
             if (!isViewExist(this.app.workspace, targetGate.id)) {
