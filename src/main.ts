@@ -1,4 +1,4 @@
-import { Notice, Plugin } from 'obsidian'
+import { Notice, ObsidianProtocolData, Plugin } from 'obsidian'
 import { SettingTab } from './SetingTab'
 import { registerGate } from './fns/registerGate'
 import { ModalEditGate } from './ModalEditGate'
@@ -8,7 +8,7 @@ import { createEmptyGateOption } from './fns/createEmptyGateOption'
 import { normalizeGateOption } from './fns/normalizeGateOption'
 import { ModalListGates } from './ModalListGates'
 import { registerCodeBlockProcessor } from './fns/registerCodeBlockProcessor'
-import { openView } from './fns/openView'
+import { isViewExist, openView } from './fns/openView'
 import { GateView } from './GateView'
 
 interface PluginSetting {
@@ -32,7 +32,7 @@ export default class OpenGatePlugin extends Plugin {
     async onload() {
         await this.loadSettings()
 
-        await this.initFrames()
+        await this.initGates()
         this.addSettingTab(new SettingTab(this.app, this))
         this.registerCommands()
         this.registerProtocol()
@@ -40,7 +40,7 @@ export default class OpenGatePlugin extends Plugin {
         registerCodeBlockProcessor(this)
     }
 
-    private async initFrames() {
+    private async initGates() {
         // Check if the UUID in the settings is empty
         if (this.settings.uuid === '') {
             // Generate a new UUID and assign it to the settings
@@ -96,26 +96,68 @@ export default class OpenGatePlugin extends Plugin {
      * We will attempt to open a gate based on the provided title and navigate to the provided URL
      */
     private registerProtocol() {
-        this.registerObsidianProtocolHandler('opengate', async (data) => {
-            const { title, url } = data
-
-            const gateId = Object.keys(this.settings.gates).find((id) => this.settings.gates[id].title.toLowerCase() === title.toLowerCase())
-            if (gateId) {
-                const gate = this.settings.gates[gateId]
-
-                const leaf = await openView(this.app.workspace, gate.id, gate.position)
-                const gateview = leaf.view as GateView
-
-                gateview.onFrameReady(() => {
-                    gateview.setUrl(url || gate.url)
-                })
-            } else {
-                new Notice(`Gate with title '${title}' not found.`)
-            }
-        })
+        this.registerObsidianProtocolHandler('opengate', this.handleCustomProtocol.bind(this))
     }
 
-    onunload() {}
+    getGateOptionFromProtocolData(data: ObsidianProtocolData): GateFrameOption | undefined {
+        const { title, url, id } = data
+
+        let targetGate: GateFrameOption | undefined
+
+        // search for the gate
+
+        if (id && this.settings.gates[id]) {
+            targetGate = this.settings.gates[id]
+        }
+
+        if (targetGate === undefined && title) {
+            targetGate = Object.values(this.settings.gates).find((gate) => gate.title.toLowerCase() === title.toLowerCase())
+        }
+
+        if (targetGate === undefined && url) {
+            targetGate = Object.values(this.settings.gates).find((gate) => gate.url.toLowerCase() === url.toLowerCase())
+        }
+
+        // update the url if needed
+        if (targetGate !== undefined && url) {
+            targetGate.url = url
+        }
+
+        return targetGate
+    }
+
+    findGateBy(field: 'title' | 'url', value: string): GateFrameOption | undefined {
+        return Object.values(this.settings.gates).find((gate) => gate[field].toLowerCase() === value.toLowerCase())
+    }
+
+    async handleCustomProtocol(data: ObsidianProtocolData) {
+        let targetGate = this.getGateOptionFromProtocolData(data)
+        if (targetGate === undefined) {
+            if (!data.url) {
+                new Notice('Missing url parameter')
+                return
+            }
+
+            // no gate with url found, try to create a new one
+            targetGate = normalizeGateOption({
+                url: data.url,
+                title: data.title,
+                profileKey: data.profileKey
+            })
+
+            if (!isViewExist(this.app.workspace, targetGate.id)) {
+                this.createTempGate(targetGate)
+            }
+        }
+
+        await openView(this.app.workspace, targetGate.id)
+    }
+
+    createTempGate(gate: GateFrameOption) {
+        this.registerView(gate.id, (leaf) => {
+            return new GateView(leaf, gate!)
+        })
+    }
 
     async addGate(gate: GateFrameOption) {
         if (!this.settings.gates.hasOwnProperty(gate.id)) {

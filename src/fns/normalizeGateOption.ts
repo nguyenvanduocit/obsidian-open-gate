@@ -1,9 +1,13 @@
 import { getSvgIcon } from './getSvgIcon'
 
-export const normalizeGateOption = (gate: GateFrameOption): GateFrameOption => {
-    if (gate.id === '') {
-        let seedString = gate.url
-        if (gate.profileKey !== 'open-gate' && gate.profileKey !== '') {
+export const normalizeGateOption = (gate: Partial<GateFrameOption>): GateFrameOption => {
+    if (gate.url === '' || gate.url === undefined) {
+        throw new Error('URL is required')
+    }
+
+    if (gate.id === '' || gate.id === undefined) {
+        let seedString = gate.url!
+        if (gate.profileKey != undefined && gate.profileKey !== 'open-gate' && gate.profileKey !== '') {
             seedString += gate.profileKey
         }
         gate.id = btoa(seedString)
@@ -17,12 +21,13 @@ export const normalizeGateOption = (gate: GateFrameOption): GateFrameOption => {
         gate.zoomFactor = 1
     }
 
-    if (gate.icon === '') {
-        gate.icon = getSvgIcon(gate.url)
+    if (gate.icon === '' || gate.icon === undefined) {
+        gate.icon = getSvgIcon(gate.url!)
     }
 
-    if (gate.title === '') {
+    if (gate.title === '' || gate.title === undefined) {
         gate.title = gate.url
     }
-    return gate
+
+    return <GateFrameOption>gate
 }

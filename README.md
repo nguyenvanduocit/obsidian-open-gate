@@ -26,7 +26,7 @@ Click here to install the plugin: [Direct Install](https://obsidian.md/plugins?i
 ## Features
 
 -   Embed any website in your Obsidian UI as a "Gate"
--   Open a Gate on the left, center, or right of the OBsidian UI
+-   Open a Gate on the left, center, or right of the Obsidian UI
 -   Embed a Gate directly within a note
 -   Auto generate icon based on the site's favicon
 -   Embed any site that can not be embedded by iframe
@@ -46,10 +46,6 @@ To use Obsidian Open Gate, follow these steps:
 
 You will then see the icon of the website in the left sidebar of Obsidian. Clicking on it.
 
-### Simple Options
-
-![](./stuff/img_1.png)
-
 Add new gate does not require to restart Obsidian. But editing and deleting gate requires to restart Obsidian.
 
 ### Quick switcher
@@ -60,18 +56,23 @@ You can quickly open gates using a single shortcut. The default is `Ctrl+Shift+G
 
 ### Linking to Gates from Notes
 
+You can also open a new Gate from within a note. By using the `obsidian://opengate` protocol.
+
+#### Open pre-configured Gate
+
 You can use a link in your notes to open a configured UI Gate and optionally open a specific URL in that Gate.
 
-The `title` must match the title set for the gate in settings.
-
-If you provide a `url`, it must be url encoded using a tool like https://www.urlencoder.org.
+By default, the plugin will find the first Gate that matches the title or URL provided.
 
 ```markdown
 Example 1: Open the Gate with a title of "googledocs".
 Will simply open the gate as configured.
 
 [Open Google Gate](obsidian://opengate?title=googledocs)
+
 ```
+
+Sometime, you want to change the url of the configured gate. You can do that by adding `url` parameter to the link.
 
 ```markdown
 Example 2: Open the Gate with a title of "googledocs" and go to a specific document.
@@ -79,6 +80,19 @@ Will navigate to the provided URL in the "googledocs" Gate.
 Note: The original URL is: https://docs.google.com/document/d/abc123/edit but has been URL Encoded
 
 [Open Google Gate](obsidian://opengate?title=google&url=https%3A%2F%2Fdocs.google.com%2Fdocument%2Fd%2Fabc123%2Fedit)
+```
+
+The gate will have them same configuration as the one you configured in the settings, but the url will be changed to the one you provided.
+
+#### Open a temporary Gate [UNDER DEVELOPMENT]
+
+If no Gate is found, the plugin will open a temporary Gate with the provided URL, this gate will not be saved and will be deleted when you close it.
+
+```markdown
+Example 1: Open the Gate with a title of "googledocs".
+Will simply open the gate as configured.
+
+[Open Google Gate](obsidian://opengate?url=https%3A%2F%2Fdocs.google.com%2Fdocument%2Fd%2Fabc123%2Fedit&profileKey=googledocs)
 ```
 
 ## Usage: Code Block

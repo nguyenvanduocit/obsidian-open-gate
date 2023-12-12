@@ -10,7 +10,13 @@ export const openView = async (workspace: Workspace, id: string, position?: Gate
 
     leaf = await createView(workspace, id, position)
     workspace.revealLeaf(leaf)
+
     return leaf
+}
+
+export const isViewExist = (workspace: Workspace, id: string): boolean => {
+    let leafs = workspace.getLeavesOfType(id)
+    return leafs.length > 0
 }
 
 const createView = async (workspace: Workspace, id: string, position?: GateFrameOptionType) => {
