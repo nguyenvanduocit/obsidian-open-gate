@@ -84,16 +84,11 @@ Note: The original URL is: https://docs.google.com/document/d/abc123/edit but ha
 
 The gate will have them same configuration as the one you configured in the settings, but the url will be changed to the one you provided.
 
-#### Open a temporary Gate [UNDER DEVELOPMENT]
+#### Open a temporary Gate
 
 If no Gate is found, the plugin will open a temporary Gate with the provided URL, this gate will not be saved and will be deleted when you close it.
 
-```markdown
-Example 1: Open the Gate with a title of "googledocs".
-Will simply open the gate as configured.
-
-[Open Google Gate](obsidian://opengate?url=https%3A%2F%2Fdocs.google.com%2Fdocument%2Fd%2Fabc123%2Fedit&profileKey=googledocs)
-```
+The feature is under development, will be available in the next release.
 
 ## Usage: Code Block
 
