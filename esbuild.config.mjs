@@ -39,6 +39,6 @@ esbuild
         logLevel: 'info',
         sourcemap: prod ? false : 'inline',
         treeShaking: true,
-        outfile: '/Users/andrew/Documents/obsidian/AndrewApollo/.obsidian/plugins/open-gate-dev/main.js'
+        outfile: 'main.js'
     })
     .catch(() => process.exit(1))
