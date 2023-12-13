@@ -10,10 +10,12 @@ export const setupInsertLinkMenu = (plugin: Plugin) => {
 const createMenu = (app: App, menu: Menu, editor: Editor) => {
     menu.addItem((item) => {
         item.setTitle('Insert Gate Link').onClick(async () => {
-            new ModalInsertLink(app, async (gate: GateFrameOption) => {
+            const modal = new ModalInsertLink(app, async (gate: GateFrameOption) => {
                 const gateLink = `[${gate.title}](obsidian://opengate?title=${encodeURIComponent(gate.title)}&url=${encodeURIComponent(gate.url)})`
                 editor.replaceSelection(gateLink)
-            }).open()
+                modal.close()
+            })
+            modal.open()
         })
     })
 }

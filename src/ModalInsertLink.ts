@@ -25,12 +25,9 @@ export class ModalInsertLink extends Modal {
             .setName('URL')
             .setClass('open-gate--form-field')
             .addText((text) =>
-                text
-                    .setPlaceholder('https://example.com')
-
-                    .onChange(async (value) => {
-                        gateOptions.url = value
-                    })
+                text.setPlaceholder('https://example.com').onChange(async (value) => {
+                    gateOptions.url = value
+                })
             )
 
         new Setting(this.contentEl)
