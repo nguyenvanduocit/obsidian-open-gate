@@ -184,10 +184,10 @@ export default class OpenGatePlugin extends Plugin {
             }
         }
 
-        const gate = await openView(this.app.workspace, targetGate?.id || 'temp-gate')
+        const gate = await openView(this.app.workspace, targetGate?.id || 'temp-gate', targetGate?.position)
         const gateView = gate.view as GateView
         gateView?.onFrameReady(() => {
-            gateView?.setUrl(data.url)
+            gateView.setUrl(data.url)
         })
     }
 
