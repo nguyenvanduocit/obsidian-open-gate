@@ -14,3 +14,13 @@ declare type GateFrameOption = {
     zoomFactor?: number
     css?: string
 }
+
+interface PluginSetting {
+    uuid: string
+    gates: Record<string, GateFrameOption>
+}
+
+interface MarkdownLink {
+    title: string
+    url: string
+}

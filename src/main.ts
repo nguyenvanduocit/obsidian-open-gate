@@ -10,20 +10,12 @@ import { ModalListGates } from './ModalListGates'
 import { registerCodeBlockProcessor } from './fns/registerCodeBlockProcessor'
 import { isViewExist, openView } from './fns/openView'
 import { GateView } from './GateView'
-
-interface PluginSetting {
-    uuid: string
-    gates: Record<string, GateFrameOption>
-}
+import { setupLinkConvertMenu } from './fns/setupLinkConvertMenu'
+import { setupInsertLinkMenu } from './fns/setupInsertLinkMenu'
 
 const DEFAULT_SETTINGS: PluginSetting = {
     uuid: '',
     gates: {}
-}
-
-const defaultGateOption: Partial<GateFrameOption> = {
-    profileKey: 'open-gate',
-    zoomFactor: 1
 }
 
 export default class OpenGatePlugin extends Plugin {
@@ -31,50 +23,17 @@ export default class OpenGatePlugin extends Plugin {
 
     async onload() {
         await this.loadSettings()
-
+        await this.mayShowOnboardingDialog()
         await this.initGates()
         this.addSettingTab(new SettingTab(this.app, this))
         this.registerCommands()
         this.registerProtocol()
-        this.setupEditorMenu()
+        setupLinkConvertMenu(this)
+        setupInsertLinkMenu(this)
         registerCodeBlockProcessor(this)
     }
 
-    setupEditorMenu() {
-        this.registerEvent(
-            this.app.workspace.on('editor-menu', (menu, editor) => {
-                const selection = editor.getSelection()
-                if (selection.length === 0) return
-                const linkMatch = selection.match(/\[([^\]]+)\]\(([^)]+)\)/)
-                if (!linkMatch) return
-
-                const link = linkMatch[2]
-                const title = linkMatch[1]
-
-                if (link.startsWith('obsidian://opengate')) {
-                    menu.addItem((item) => {
-                        item.setTitle('Convert to normal link').onClick(async () => {
-                            // get the url parameter from the link
-                            const urlMatch = link.match(/url=([^&]+)/)
-                            if (!urlMatch) return
-                            const url = decodeURIComponent(urlMatch[1])
-                            const normalLink = `[${title}](${url})`
-                            editor.replaceSelection(normalLink)
-                        })
-                    })
-                } else {
-                    menu.addItem((item) => {
-                        item.setTitle('Convert to Gate Link').onClick(async () => {
-                            const gateLink = `[${title}](obsidian://opengate?title=${encodeURIComponent(title)}&url=${encodeURIComponent(link)})`
-                            editor.replaceSelection(gateLink)
-                        })
-                    })
-                }
-            })
-        )
-    }
-
-    private async initGates() {
+    async mayShowOnboardingDialog() {
         // Check if the UUID in the settings is empty
         if (this.settings.uuid === '') {
             // Generate a new UUID and assign it to the settings
@@ -91,7 +50,9 @@ export default class OpenGatePlugin extends Plugin {
                 }).open()
             }
         }
+    }
 
+    private async initGates() {
         // Iterate over all the gates in the settings
         for (const gateId in this.settings.gates) {
             // Get the gate with the current ID
@@ -192,21 +153,15 @@ export default class OpenGatePlugin extends Plugin {
     }
 
     async addGate(gate: GateFrameOption) {
-        if (!this.settings.gates.hasOwnProperty(gate.id)) {
-            registerGate(this, gate)
+        const normalizedGate = normalizeGateOption(gate)
+
+        if (!this.settings.gates.hasOwnProperty(normalizedGate.id)) {
+            registerGate(this, normalizedGate)
         } else {
             new Notice('This change will take effect after you reload Obsidian.')
         }
 
-        if (gate.profileKey === '' || gate.profileKey === undefined) {
-            gate.profileKey = defaultGateOption.profileKey
-        }
-
-        if (gate.zoomFactor === 0 || gate.zoomFactor === undefined) {
-            gate.zoomFactor = defaultGateOption.zoomFactor
-        }
-
-        this.settings.gates[gate.id] = gate
+        this.settings.gates[normalizedGate.id] = normalizedGate
 
         await this.saveSettings()
     }

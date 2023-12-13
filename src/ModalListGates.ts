@@ -1,15 +1,11 @@
 import { App, Modal } from 'obsidian'
-import { formEditGate } from './fns/formEditGate'
+import { createFormEditGate } from './fns/createFormEditGate'
 import { openView } from './fns/openView'
 
 export class ModalListGates extends Modal {
     gates: Record<string, GateFrameOption>
     onSubmit: (result: GateFrameOption) => void
-    constructor(
-        app: App,
-        gates: Record<string, GateFrameOption>,
-        onSubmit: (result: GateFrameOption) => void
-    ) {
+    constructor(app: App, gates: Record<string, GateFrameOption>, onSubmit: (result: GateFrameOption) => void) {
         super(app)
         this.onSubmit = onSubmit
         this.gates = gates

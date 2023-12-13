@@ -1,14 +1,10 @@
 import { App, Modal } from 'obsidian'
-import { formEditGate } from './fns/formEditGate'
+import { createFormEditGate } from './fns/createFormEditGate'
 
 export class ModalEditGate extends Modal {
     gateOptions: GateFrameOption
     onSubmit: (result: GateFrameOption) => void
-    constructor(
-        app: App,
-        gateOptions: GateFrameOption,
-        onSubmit: (result: GateFrameOption) => void
-    ) {
+    constructor(app: App, gateOptions: GateFrameOption, onSubmit: (result: GateFrameOption) => void) {
         super(app)
         this.onSubmit = onSubmit
         this.gateOptions = gateOptions
@@ -17,7 +13,7 @@ export class ModalEditGate extends Modal {
     onOpen() {
         const { contentEl } = this
         contentEl.createEl('h3', { text: 'Open Gate' })
-        formEditGate(contentEl, this.gateOptions, (result) => {
+        createFormEditGate(contentEl, this.gateOptions, (result) => {
             this.onSubmit(result)
             this.close()
         })

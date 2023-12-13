@@ -1,14 +1,10 @@
 import { App, Modal } from 'obsidian'
-import { formEditGate } from './fns/formEditGate'
+import { createFormEditGate } from './fns/createFormEditGate'
 
 export class ModalOnBoarding extends Modal {
     gateOptions: GateFrameOption
     onSubmit: (result: GateFrameOption) => void
-    constructor(
-        app: App,
-        gateOptions: GateFrameOption,
-        onSubmit: (result: GateFrameOption) => void
-    ) {
+    constructor(app: App, gateOptions: GateFrameOption, onSubmit: (result: GateFrameOption) => void) {
         super(app)
         this.onSubmit = onSubmit
         this.gateOptions = gateOptions
@@ -24,7 +20,7 @@ export class ModalOnBoarding extends Modal {
             text: 'But now you have to create your first gate.'
         })
 
-        formEditGate(contentEl, this.gateOptions, (result) => {
+        createFormEditGate(contentEl, this.gateOptions, (result) => {
             this.onSubmit(result)
             this.close()
         })

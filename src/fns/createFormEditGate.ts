@@ -1,8 +1,9 @@
 import { Setting } from 'obsidian'
 import { getSvgIcon } from './getSvgIcon'
 import { normalizeGateOption } from './normalizeGateOption'
+import { createEmptyGateOption } from './createEmptyGateOption'
 
-export const formEditGate = (contentEl: HTMLElement, gateOptions: GateFrameOption, onSubmit: (result: GateFrameOption) => void) => {
+export const createFormEditGate = (contentEl: HTMLElement, gateOptions: GateFrameOption, onSubmit?: (result: GateFrameOption) => void) => {
     new Setting(contentEl)
         .setName('URL')
         .setClass('open-gate--form-field')
@@ -127,7 +128,7 @@ export const formEditGate = (contentEl: HTMLElement, gateOptions: GateFrameOptio
             .setCta()
             .onClick(async () => {
                 gateOptions = normalizeGateOption(gateOptions)
-                onSubmit(gateOptions)
+                onSubmit && onSubmit(gateOptions)
             })
     )
 }
