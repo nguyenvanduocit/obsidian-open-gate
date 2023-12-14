@@ -22,7 +22,7 @@ export const normalizeGateOption = (gate: Partial<GateFrameOption>): GateFrameOp
     }
 
     if (gate.icon === '' || gate.icon === undefined) {
-        gate.icon = getSvgIcon(gate.url!)
+        gate.icon = gate.url?.startsWith('http') ? getSvgIcon(gate.url) : 'globe'
     }
 
     if (gate.title === '' || gate.title === undefined) {

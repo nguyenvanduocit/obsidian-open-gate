@@ -1,6 +1,4 @@
 import { App, Editor, Menu, Notice, Plugin } from 'obsidian'
-import { ModalOnBoarding } from '../ModalOnboarding'
-import { createEmptyGateOption } from './createEmptyGateOption'
 import { ModalInsertLink } from '../ModalInsertLink'
 
 export const setupInsertLinkMenu = (plugin: Plugin) => {

@@ -15,15 +15,12 @@ export const registerGate = (plugin: Plugin, options: GateFrameOption) => {
     }
 
     if (options.hasRibbon) {
-        plugin.addRibbonIcon(iconName, options.title, async (evt: MouseEvent) =>
-            openView(plugin.app.workspace, options.id, options.position)
-        )
+        plugin.addRibbonIcon(iconName, options.title, async (evt: MouseEvent) => openView(plugin.app.workspace, options.id, options.position))
     }
 
     plugin.addCommand({
         id: `open-gate-${btoa(options.url)}`,
         name: `Open gate ${options.title}`,
-        callback: async () =>
-            await openView(plugin.app.workspace, options.id, options.position)
+        callback: async () => await openView(plugin.app.workspace, options.id, options.position)
     })
 }
