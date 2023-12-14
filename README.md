@@ -110,22 +110,25 @@ css: |
 ```
 ````
 
-## Deployment
+## FAQ
 
-This project uses `bun` for building. To build the plugin, follow these steps:
+### How to use local file as a gate?
 
-1. Ensure you have `bun` installed.
-2. Run `bun install`.
-3. Navigate to the project directory and run `bun run build`.
+You can use `file://` protocol to open local file. For example:
 
-## Contributing
+1. Windows: `file:///C:/Users/username/another-vault/note.md`
+2. Mac: `file:///Users/username/Documents/another-vault/note.md`
 
-We welcome contributions from everyone. If you're interested in contributing, here's how you can do it:
+### How to quickly insert a gate link?
 
-1. Fork the repository.
-2. Create a new branch for your changes.
-3. Make your changes in your branch.
-4. Submit a pull request.
+1. Right-click on the editor
+2. Select `Insert Gate Link`
+
+if there are a normal link selected, the plugin will convert it to a gate link and vice versa.
+
+## Contributing & Deployment
+
+Please read [CONTRIBUTING.md](./CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Contributors ✨
 
