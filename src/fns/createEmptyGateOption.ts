@@ -4,7 +4,7 @@ export const createEmptyGateOption = (): GateFrameOption => {
     return {
         id: '',
         title: '',
-        icon: 'globe',
+        icon: '',
         hasRibbon: true,
         position: 'right',
         profileKey: 'open-gate',
