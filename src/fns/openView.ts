@@ -26,7 +26,7 @@ const createView = async (workspace: Workspace, id: string, position?: GateFrame
             leaf = workspace.getLeftLeaf(false)
             break
         case 'center':
-            leaf = workspace.getLeaf(false)
+            leaf = workspace.getLeaf(true)
             break
         case 'right':
         default:
