@@ -1,4 +1,4 @@
-import { App, Modal } from 'obsidian'
+import { App, getIcon, Modal } from 'obsidian'
 import { createFormEditGate } from './fns/createFormEditGate'
 import { openView } from './fns/openView'
 
@@ -20,8 +20,16 @@ export class ModalListGates extends Modal {
             const container = contentEl.createEl('div', {
                 cls: 'open-gate--quick-list-item'
             })
-            // @ts-ignore-next-line
-            container.createEl(`svg`, { cls: 'svg-icon' }).innerHTML = gate.icon
+
+            if (!gate.icon.startsWith('<svg')) {
+                const iconSvg = getIcon(gate.icon) ?? getIcon('link-external')!
+                iconSvg.classList.add('svg-icon')
+                container.appendChild(iconSvg)
+            } else {
+                //@ts-ignore-next-line
+                container.createEl('svg', { cls: 'svg-icon' }).innerHTML = gate.icon
+            }
+
             container.createEl('span', { text: gate.title })
 
             container.addEventListener('click', async () => {
