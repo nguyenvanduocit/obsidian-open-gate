@@ -1,7 +1,5 @@
 import { Setting } from 'obsidian'
-import { getSvgIcon } from './getSvgIcon'
 import { normalizeGateOption } from './normalizeGateOption'
-import { createEmptyGateOption } from './createEmptyGateOption'
 
 export const createFormEditGate = (contentEl: HTMLElement, gateOptions: GateFrameOption, onSubmit?: (result: GateFrameOption) => void) => {
     new Setting(contentEl)

@@ -1,4 +1,4 @@
-import { Platform, Plugin } from 'obsidian'
+import { Platform } from 'obsidian'
 import { parse } from 'yaml'
 import { createIframe } from './createIframe'
 import { createWebviewTag } from './createWebviewTag'
@@ -101,7 +101,7 @@ function createFrame(options: GateFrameOption, height: string): HTMLIFrameElemen
 }
 
 export function registerCodeBlockProcessor(plugin: OpenGatePlugin) {
-    plugin.registerMarkdownCodeBlockProcessor('gate', (sourceCode, el, ctx) => {
+    plugin.registerMarkdownCodeBlockProcessor('gate', (sourceCode, el, _ctx) => {
         el.addClass('open-gate-view')
         const frame = processNewSyntax(plugin, sourceCode)
         el.appendChild(frame)
