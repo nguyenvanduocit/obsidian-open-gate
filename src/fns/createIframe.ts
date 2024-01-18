@@ -11,6 +11,18 @@ export const createIframe = (params: Partial<GateFrameOption>, onReady?: () => v
 
     iframe.addEventListener('load', () => {
         onReady?.call(null)
+
+        if (params?.css) {
+            const style = document.createElement('style')
+            style.textContent = params.css
+            iframe.contentDocument?.head.appendChild(style)
+        }
+
+        if (params?.js) {
+            const script = document.createElement('script')
+            script.textContent = params.js
+            iframe.contentDocument?.head.appendChild(script)
+        }
     })
 
     return iframe

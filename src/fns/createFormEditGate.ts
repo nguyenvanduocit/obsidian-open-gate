@@ -88,16 +88,6 @@ export const createFormEditGate = (contentEl: HTMLElement, gateOptions: GateFram
         )
 
     new Setting(advancedOptions)
-        .setName('CSS')
-        .setClass('open-gate--form-field--column')
-        .setDesc('Leave it blank if you are not sure')
-        .addTextArea((text) =>
-            text.setValue(gateOptions.css ?? '').onChange(async (value) => {
-                gateOptions.css = value
-            })
-        )
-
-    new Setting(advancedOptions)
         .setName('Profile Key')
         .setClass('open-gate--form-field')
         .setDesc("It's like profiles in Chrome, gates with the same profile can share storage")
@@ -119,6 +109,26 @@ export const createFormEditGate = (contentEl: HTMLElement, gateOptions: GateFram
         .addText((text) =>
             text.setValue(gateOptions.zoomFactor?.toString() ?? '0.0').onChange(async (value) => {
                 gateOptions.zoomFactor = parseFloat(value)
+            })
+        )
+
+    new Setting(advancedOptions)
+        .setName('CSS')
+        .setClass('open-gate--form-field--column')
+        .setDesc('Leave it blank if you are not sure')
+        .addTextArea((text) =>
+            text.setValue(gateOptions.css ?? '').onChange(async (value) => {
+                gateOptions.css = value
+            })
+        )
+
+    new Setting(advancedOptions)
+        .setName('JavaScript')
+        .setClass('open-gate--form-field--column')
+        .setDesc('Leave it blank if you are not sure')
+        .addTextArea((text) =>
+            text.setValue(gateOptions.js ?? '').onChange(async (value) => {
+                gateOptions.js = value
             })
         )
 

@@ -33,6 +33,10 @@ export const createWebviewTag = (params: Partial<GateFrameOption>, onReady?: () 
             await webviewTag.insertCSS(params.css)
         }
 
+        if (params?.js) {
+            await webviewTag.executeJavaScript(params.js)
+        }
+
         onReady?.call(null)
     })
 

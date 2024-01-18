@@ -13,6 +13,7 @@ declare type GateFrameOption = {
     userAgent?: string
     zoomFactor?: number
     css?: string
+    js?: string
 }
 
 interface PluginSetting {

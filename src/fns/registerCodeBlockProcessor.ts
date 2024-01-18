@@ -4,15 +4,18 @@ import { createIframe } from './createIframe'
 import { createWebviewTag } from './createWebviewTag'
 import WebviewTag = Electron.WebviewTag
 import { createEmptyGateOption } from './createEmptyGateOption'
+import OpenGatePlugin from '../main'
+import { normalizeGateOption } from './normalizeGateOption'
 
-function processNewSyntax(sourceCode: string): Node {
-    const options = createEmptyGateOption()
+type CodeBlockOption = GateFrameOption & {
+    height?: string | number
+}
 
+function processNewSyntax(plugin: OpenGatePlugin, sourceCode: string): Node {
     // we want user follow the yaml format, but sometime, it's easier for user to just type the url in the first line, so we support that
-    const firstLine = sourceCode.split('\n')[0]
-    if (firstLine.startsWith('http')) {
-        options.url = firstLine
-        sourceCode = sourceCode.replace(firstLine, '').trim()
+    const firstLineUrl = sourceCode.split('\n')[0]
+    if (firstLineUrl.startsWith('http')) {
+        sourceCode = sourceCode.replace(firstLineUrl, '').trim()
     }
 
     // Replace tabs with spaces at the start of each line, because YAML doesn't support tabs
@@ -22,7 +25,12 @@ function processNewSyntax(sourceCode: string): Node {
         return createFrame(createEmptyGateOption(), '800px')
     }
 
-    let data
+    let data: Partial<CodeBlockOption> = {}
+
+    if (firstLineUrl.startsWith('http')) {
+        data.url = firstLineUrl
+    }
+
     try {
         data = parse(sourceCode)
     } catch (error) {
@@ -39,9 +47,19 @@ function processNewSyntax(sourceCode: string): Node {
         delete data.height
     }
 
-    Object.assign(options, data)
+    let prefill: GateFrameOption | undefined
 
-    return createFrame(options, height)
+    if (data.title) {
+        prefill = plugin.findGateBy('title', data.title)
+    } else if (data.url) {
+        prefill = plugin.findGateBy('url', data.url)
+    }
+
+    if (prefill) {
+        data = Object.assign(prefill, data)
+    }
+
+    return createFrame(normalizeGateOption(data), height)
 }
 
 function createErrorMessage(error?: Error): Node {
@@ -82,10 +100,10 @@ function createFrame(options: GateFrameOption, height: string): HTMLIFrameElemen
     return frame
 }
 
-export function registerCodeBlockProcessor(plugin: Plugin) {
+export function registerCodeBlockProcessor(plugin: OpenGatePlugin) {
     plugin.registerMarkdownCodeBlockProcessor('gate', (sourceCode, el, ctx) => {
         el.addClass('open-gate-view')
-        const frame = processNewSyntax(sourceCode)
+        const frame = processNewSyntax(plugin, sourceCode)
         el.appendChild(frame)
     })
 }
