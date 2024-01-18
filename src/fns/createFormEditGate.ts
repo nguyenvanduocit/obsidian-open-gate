@@ -110,10 +110,18 @@ export const createFormEditGate = (contentEl: HTMLElement, gateOptions: GateFram
             })
         )
 
+    const cssFieldDesc = new DocumentFragment()
+
+    // Create a new element to hold the description and the link
+    const descLink = document.createElement('a')
+    descLink.href = 'https://github.com/nguyenvanduocit/obsidian-open-gate/discussions/categories/snippets'
+    descLink.textContent = 'Check out the snippet library here'
+    cssFieldDesc.appendChild(descLink)
+
     new Setting(advancedOptions)
         .setName('CSS')
         .setClass('open-gate--form-field--column')
-        .setDesc('Leave it blank if you are not sure')
+        .setDesc(cssFieldDesc)
         .addTextArea((text) =>
             text.setValue(gateOptions.css ?? '').onChange(async (value) => {
                 gateOptions.css = value
