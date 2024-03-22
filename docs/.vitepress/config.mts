@@ -6,7 +6,6 @@ export default defineConfig({
     lastUpdated: true,
     cleanUrls: true,
     metaChunk: true,
-    base: import.meta.env.MODE=='production' ? 'https://nguyenvanduocit.github.com/obdidian-open-gate' : '/',
     locales: {
         root: {
             label: 'English',
