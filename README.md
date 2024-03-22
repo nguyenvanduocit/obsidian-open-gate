@@ -1,6 +1,11 @@
 ![](./stuff/img.png)
 
-> Join our discord server: [join now](https://discord.gg/rxCdQ2K8M5)
+# CUSTOMER SUPPORT
+
+For the fastest and most reliable support, please use our customer support portal. This way, I can easily track your issue and make sure nothing gets overlooked. You can still reach me directly on Discord if needed.
+
+- [Discord](https://discord.gg/rxCdQ2K8M5)
+- [Support Portal](https://aiocean.atlassian.net/servicedesk/customer/portal/4)
 
 # Obsidian Open Gate
 
