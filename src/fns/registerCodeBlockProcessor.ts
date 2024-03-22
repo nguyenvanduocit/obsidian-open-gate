@@ -17,7 +17,6 @@ function processNewSyntax(plugin: OpenGatePlugin, sourceCode: string): Node {
     if (firstLineUrl.startsWith('http')) {
         sourceCode = sourceCode.replace(firstLineUrl, '').trim()
     }
-
     // Replace tabs with spaces at the start of each line, because YAML doesn't support tabs
     sourceCode = sourceCode.replace(/^\t+/gm, (match) => '  '.repeat(match.length))
 
@@ -32,10 +31,12 @@ function processNewSyntax(plugin: OpenGatePlugin, sourceCode: string): Node {
     }
 
     try {
-        data = parse(sourceCode)
+        data = Object.assign(data, parse(sourceCode))
     } catch (error) {
         return createErrorMessage(error)
     }
+
+    console.log(data)
 
     if (typeof data !== 'object' || data === null || Object.keys(data).length === 0) {
         return createErrorMessage()
