@@ -6,7 +6,7 @@ For the fastest and most reliable support, please use our customer support porta
 
 - [Discord](https://discord.gg/rxCdQ2K8M5)
 - [Support Portal](https://aiocean.atlassian.net/servicedesk/customer/portal/4)
-- [Tutorial](https://nguyenvanduocit.github.io/obsidian-open-gate)
+- [Tutorial](https://open-gate.aiocean.io/)
 
 # Obsidian Open Gate
 
@@ -29,7 +29,7 @@ Click here to install the plugin: [Direct Install](https://obsidian.md/plugins?i
 
 ## Tutorial
 
-For more information, please visit own tutorial: [Tutorial](https://nguyenvanduocit.github.io/obsidian-open-gate)
+For more information, please visit own tutorial: [Tutorial](https://open-gate.aiocean.io/)
 
 ## Contributors ✨
 
