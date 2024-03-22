@@ -1,8 +1,10 @@
 import DefaultTheme from 'vitepress/theme'
-import { listen } from 'quicklink'
+// @ts-ignore
+if (!import.meta.env.SSR) {
+    import('quicklink').then((module) => {
+        module.listen()
+    })
+}
 import './style.css'
-listen({
-    prerenderAndPrefetch: true
-})
 
 export default DefaultTheme
