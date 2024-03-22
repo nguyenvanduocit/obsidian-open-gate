@@ -8,9 +8,9 @@ For the fastest and most reliable support, please use our customer support porta
 - [Support Portal](https://aiocean.atlassian.net/servicedesk/customer/portal/4)
 - [Tutorial](https://open-gate.aiocean.io/)
 
-# Obsidian Open Gate
+# What is Open Gate?
 
-Obsidian Open Gate is a plugin for Obsidian, a popular note-taking app. This plugin allows you to embed any website into Obsidian, providing a seamless browsing and note-taking experience. Whether you're researching, studying, or just browsing the web, Obsidian Open Gate keeps everything you need in one place.
+Obsidian Open Gate is a plugin for Obsidian. Allows you to embed any website into Obsidian, providing a seamless browsing and note-taking experience. Whether you're researching, studying, or just browsing the web, Obsidian Open Gate keeps everything you need in one place.
 
 ## Installation
 
@@ -29,7 +29,7 @@ Click here to install the plugin: [Direct Install](https://obsidian.md/plugins?i
 
 ## Tutorial
 
-For more information, please visit own tutorial: [Tutorial](https://open-gate.aiocean.io/)
+We prepared a very detailed tutorial for you, don't forget to check it out: [Tutorial](https://open-gate.aiocean.io/)
 
 ## Contributors ✨
 
