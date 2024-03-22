@@ -16,7 +16,7 @@ jobs:
             - name: Build
               id: build
               run: |
-                  bun run install
+                  bun install
                   bun run build
                   mkdir ${{ env.PLUGIN_NAME }}
                   cp main.js manifest.json ${{ env.PLUGIN_NAME }}
