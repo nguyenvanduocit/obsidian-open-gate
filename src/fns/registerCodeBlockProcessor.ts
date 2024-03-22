@@ -6,6 +6,7 @@ import WebviewTag = Electron.WebviewTag
 import { createEmptyGateOption } from './createEmptyGateOption'
 import OpenGatePlugin from '../main'
 import { normalizeGateOption } from './normalizeGateOption'
+import { GateFrameOption } from '../GateOptions'
 
 type CodeBlockOption = GateFrameOption & {
     height?: string | number
@@ -35,8 +36,6 @@ function processNewSyntax(plugin: OpenGatePlugin, sourceCode: string): Node {
     } catch (error) {
         return createErrorMessage(error)
     }
-
-    console.log(data)
 
     if (typeof data !== 'object' || data === null || Object.keys(data).length === 0) {
         return createErrorMessage()

@@ -1,5 +1,6 @@
 import { App, Editor, Menu, Notice, Plugin } from 'obsidian'
 import { ModalInsertLink } from '../ModalInsertLink'
+import { GateFrameOption } from '../GateOptions'
 
 export const setupInsertLinkMenu = (plugin: Plugin) => {
     plugin.registerEvent(plugin.app.workspace.on('editor-menu', (menu, editor) => createMenu(plugin.app, menu, editor)))

@@ -1,4 +1,5 @@
 import { getSvgIcon } from './getSvgIcon'
+import { GateFrameOption } from '../GateOptions'
 
 export const normalizeGateOption = (gate: Partial<GateFrameOption>): GateFrameOption => {
     if (gate.url === '' || gate.url === undefined) {

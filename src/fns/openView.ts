@@ -1,4 +1,5 @@
 import { Workspace, WorkspaceLeaf } from 'obsidian'
+import { GateFrameOptionType } from '../GateOptions'
 
 export const openView = async (workspace: Workspace, id: string, position?: GateFrameOptionType): Promise<WorkspaceLeaf> => {
     let leaf: WorkspaceLeaf

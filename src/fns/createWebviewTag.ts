@@ -1,4 +1,5 @@
 import WebviewTag = Electron.WebviewTag
+import { GateFrameOption } from '../GateOptions'
 
 // Constants for repeated strings
 const DEFAULT_URL = 'about:blank'

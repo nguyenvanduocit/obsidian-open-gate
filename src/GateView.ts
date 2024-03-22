@@ -4,6 +4,7 @@ import { Platform } from 'obsidian'
 import { createIframe } from './fns/createIframe'
 import { clipboard } from 'electron'
 import WebviewTag = Electron.WebviewTag
+import { GateFrameOption } from './GateOptions'
 
 export class GateView extends ItemView {
     private readonly options: GateFrameOption

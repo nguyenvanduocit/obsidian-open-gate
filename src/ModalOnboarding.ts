@@ -1,5 +1,6 @@
 import { App, Modal } from 'obsidian'
 import { createFormEditGate } from './fns/createFormEditGate'
+import { GateFrameOption } from './GateOptions'
 
 export class ModalOnBoarding extends Modal {
     gateOptions: GateFrameOption

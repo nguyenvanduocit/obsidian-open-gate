@@ -1,4 +1,5 @@
 import { Editor, Menu, Notice, Plugin } from 'obsidian'
+import { MarkdownLink } from '../types'
 
 export const setupLinkConvertMenu = (plugin: Plugin) => {
     plugin.registerEvent(plugin.app.workspace.on('editor-menu', createMenu))

@@ -12,6 +12,8 @@ import { isViewExist, openView } from './fns/openView'
 import { GateView } from './GateView'
 import { setupLinkConvertMenu } from './fns/setupLinkConvertMenu'
 import { setupInsertLinkMenu } from './fns/setupInsertLinkMenu'
+import { PluginSetting } from './types'
+import { GateFrameOption } from './GateOptions'
 
 const DEFAULT_SETTINGS: PluginSetting = {
     uuid: '',

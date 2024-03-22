@@ -1,3 +1,5 @@
+import { GateFrameOption } from '../GateOptions'
+
 export const createIframe = (params: Partial<GateFrameOption>, onReady?: () => void): HTMLIFrameElement => {
     const iframe = document.createElement('iframe')
 

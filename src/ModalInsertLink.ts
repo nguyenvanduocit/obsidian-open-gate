@@ -1,6 +1,7 @@
 import { App, Modal, Setting } from 'obsidian'
 import { createEmptyGateOption } from './fns/createEmptyGateOption'
 import { normalizeGateOption } from './fns/normalizeGateOption'
+import { GateFrameOption } from './GateOptions'
 
 export class ModalInsertLink extends Modal {
     onSubmit: (result: GateFrameOption) => void

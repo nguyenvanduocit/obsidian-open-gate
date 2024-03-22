@@ -2,6 +2,7 @@ import { App, PluginSettingTab, Setting, Platform } from 'obsidian'
 import OpenGatePlugin from './main'
 import { ModalEditGate } from './ModalEditGate'
 import { createEmptyGateOption } from './fns/createEmptyGateOption'
+import { GateFrameOption } from './GateOptions'
 
 export class SettingTab extends PluginSettingTab {
     plugin: OpenGatePlugin

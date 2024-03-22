@@ -1,6 +1,7 @@
 import { App, getIcon, Modal } from 'obsidian'
 import { createFormEditGate } from './fns/createFormEditGate'
 import { openView } from './fns/openView'
+import { GateFrameOption } from './GateOptions'
 
 export class ModalListGates extends Modal {
     gates: Record<string, GateFrameOption>

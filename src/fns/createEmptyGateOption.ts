@@ -1,4 +1,5 @@
 import getDefaultUserAgent from './getDefaultUserAgent'
+import { GateFrameOption } from '../GateOptions'
 
 export const createEmptyGateOption = (): GateFrameOption => {
     return {
