@@ -105,10 +105,13 @@ You can use a code block with the language set to `gate` to embed any website di
 ```gate
 url: https://12bit.vn
 height: 300
+zoomFactor: 1
 css: |
    html { filter: invert(90%) hue-rotate(180deg)!important; }
 ```
 ````
+
+zoomFactor: 1 means 100% zoom, 0.5 means 50% zoom, 2 means 200% zoom.
 
 ## FAQ
 
