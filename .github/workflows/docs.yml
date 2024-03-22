@@ -39,7 +39,7 @@ jobs:
       - name: Install dependencies
         run: bun install
       - name: Build with VitePress
-        run: bun run docs:build --base https://nguyenvanduocit.github.com/obdidian-open-gate
+        run: bun run docs:build --base https://nguyenvanduocit.github.io/obdidian-open-gate/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
