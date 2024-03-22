@@ -1,6 +1,6 @@
 ![](./stuff/img.png)
 
-> Join our discord server: [join now](https://discord.gg/wpyAsJMd)
+> Join our discord server: [join now](https://discord.gg/rxCdQ2K8M5)
 
 # Obsidian Open Gate
 
@@ -132,6 +132,11 @@ if there are a normal link selected, the plugin will convert it to a gate link a
 ## Contributing & Deployment
 
 Please read [CONTRIBUTING.md](./CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+
+## Community Tutorial
+
+- [Chinese by Jerry](https://www.youtube.com/watch?v=2ZYarwN-XyQ&t=391s)
+- [RicRaftisConsulting](https://www.youtube.com/watch?v=iJ0-u4KlGyQ&t=12s)
 
 ## Contributors ✨
 
