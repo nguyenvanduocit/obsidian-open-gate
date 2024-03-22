@@ -10,16 +10,14 @@ jobs:
     build:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
-            - name: Use Node.js
-              uses: actions/setup-node@v1
-              with:
-                  node-version: '14.x'
+            - uses: actions/checkout@v4
+            - name: Use bun
+              uses: oven-sh/setup-bun@v1
             - name: Build
               id: build
               run: |
-                  yarn
-                  yarn run build --if-present
+                  bun run install
+                  bun run build
                   mkdir ${{ env.PLUGIN_NAME }}
                   cp main.js manifest.json ${{ env.PLUGIN_NAME }}
                   zip -r ${{ env.PLUGIN_NAME }}.zip ${{ env.PLUGIN_NAME }}
