@@ -14,7 +14,7 @@ hero:
       link: /introduction
 
   image:
-    src: https://vitepress.dev/vitepress-logo-large.webp
+    src: /assets/logo.webp
     alt: VitePress
 
 features:

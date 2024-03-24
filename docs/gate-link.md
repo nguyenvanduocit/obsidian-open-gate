@@ -20,6 +20,10 @@ A popup will appear, asking for the title and URL of the gate. The URL will be a
 
 ![img.png](assets/img_2.png)
 
+## Convert to gate link
+
+If you right-click on a normal link, you will see an option to convert it to a gate link. The URL will be automatically encoded for you.
+
 ## Reuse gates
 
 Once again, to simplify the reuse of gates configured in the settings, the plugin automatically matches the title or URL with existing gates. If a match is found, the options from the gate configured in the settings are merged with the options specified in the note.
