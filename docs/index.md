@@ -14,7 +14,7 @@ hero:
       link: /introduction
 
   image:
-    src: /assets/logo.webp
+    src: /logo.webp
     alt: VitePress
 
 features:

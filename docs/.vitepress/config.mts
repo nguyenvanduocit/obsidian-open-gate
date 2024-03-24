@@ -24,7 +24,7 @@ export default defineConfig({
         ['meta', { property: 'og:site_name', content: 'OpenGate' }]
     ],
     themeConfig: {
-        logo: { src: '/assets/logo-small.webp', width: 24, height: 24 },
+        logo: { src: '/logo-small.webp', width: 24, height: 24 },
         nav: [
             { text: 'Install', link: 'https://obsidian.md/plugins?id=open-gate' },
             { text: 'Tutorial', link: '/introduction' },
