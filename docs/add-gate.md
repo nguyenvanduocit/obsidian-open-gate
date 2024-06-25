@@ -33,3 +33,7 @@ To add a new gate using the setting screen, follow these simple steps:
 ## Gate Options
 
 Please refer to the [Gate Options](gate-options.md) documentation for more information on customizing your gates.
+
+## Custom icon
+
+The app will automatically generate an icon for your gate based on the site's favicon. However, you can also set a custom icon for your gate. You can fill svg code in the icon field to set a custom icon. Remember to remove the `width` and `height` attributes from the svg code.
