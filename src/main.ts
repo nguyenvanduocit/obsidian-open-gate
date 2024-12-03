@@ -13,7 +13,7 @@ import { GateView } from './GateView'
 import { setupLinkConvertMenu } from './fns/setupLinkConvertMenu'
 import { setupInsertLinkMenu } from './fns/setupInsertLinkMenu'
 import { PluginSetting } from './types'
-import { GateFrameOption } from './GateOptions'
+import { GateFrameOption, GateFrameOptionType } from './GateOptions'
 
 const DEFAULT_SETTINGS: PluginSetting = {
     uuid: '',
@@ -108,27 +108,33 @@ export default class OpenGatePlugin extends Plugin {
     }
 
     getGateOptionFromProtocolData(data: ObsidianProtocolData): GateFrameOption | undefined {
-        const { title, url, id } = data
+        const { title, url, id, position } = data
 
+        // Initialize targetGate as undefined
         let targetGate: GateFrameOption | undefined
 
-        // search for the gate
-
+        // Search for the gate by id first
         if (id && this.settings.gates[id]) {
             targetGate = this.settings.gates[id]
+        } else {
+            // Search for the gate by title or url if id is not found
+            targetGate = Object.values(this.settings.gates).find(
+                (gate) => (title && gate.title.toLowerCase() === title.toLowerCase()) || (url && gate.url.toLowerCase() === url.toLowerCase())
+            )
         }
 
-        if (targetGate === undefined && title) {
-            targetGate = Object.values(this.settings.gates).find((gate) => gate.title.toLowerCase() === title.toLowerCase())
+        // If no gate is found, create a new empty gate option
+        if (!targetGate) {
+            targetGate = createEmptyGateOption()
         }
 
-        if (targetGate === undefined && url) {
-            targetGate = Object.values(this.settings.gates).find((gate) => gate.url.toLowerCase() === url.toLowerCase())
-        }
-
-        // update the url if needed
-        if (targetGate !== undefined && url) {
+        // Update the url and position if needed
+        if (url) {
             targetGate.url = url
+        }
+
+        if (position) {
+            targetGate.position = position as GateFrameOptionType
         }
 
         return targetGate
@@ -146,6 +152,8 @@ export default class OpenGatePlugin extends Plugin {
                 return
             }
         }
+
+        console.log(targetGate)
 
         const gate = await openView(this.app.workspace, targetGate?.id || 'temp-gate', targetGate?.position)
         const gateView = gate.view as GateView
