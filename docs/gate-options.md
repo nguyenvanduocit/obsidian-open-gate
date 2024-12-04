@@ -37,3 +37,5 @@ The `zoomFactor` in the `GateFrameOption` determines the magnification level of 
 
 - Incorrect CSS/JS may break the appearance/functionality of the gate.
 - Be cautious with JS that interacts with external websites to avoid security risks.
+
+You may want to read [Gate Options](gate-options.md) to learn more about the options you can use. Of course, the are no space for custom css or javascript in the gate view.

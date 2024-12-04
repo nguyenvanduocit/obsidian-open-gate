@@ -18,18 +18,18 @@ hero:
     alt: VitePress
 
 features:
-  - title: Dedicated View
+  - title: Embed Any Website
     icon: 🖼️
-    details: Any website can be opened in a dedicated view
-  - title: Inline View
+    details: Create "Gates" that display websites directly in Obsidian's interface
+  - title: Flexible Options
     icon: 📄
-    details: Or can be embedded directly in a note
-  - title: Gate Linking
+    details: Open websites in dedicated views or embed them inline within your notes
+  - title: Profile Management
     icon: 🔗
-    details: Click on a link to open this website inside Obsidian
-  - title: Custom CSS
+    details: Utilize profile keys to share storage between different gates, similar to Chrome profiles
+  - title: Customizable Experience
     icon: 🎨
-    details: Inject custom CSS to match the look and feel of Obsidian
+    details: Inject custom CSS and JavaScript to tailor the appearance and functionality of embedded websites
 ---
 
 <script setup>
