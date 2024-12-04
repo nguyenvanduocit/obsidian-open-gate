@@ -17,6 +17,17 @@ export class ModalOnBoarding extends Modal {
         contentEl.createEl('p', {
             text: 'OpenGate is a plugin that allows you to embed any website in Obsidian. You will never have to leave Obsidian again!'
         })
+
+        contentEl.createEl('p', {
+            text: 'If you need help, please join our community.'
+        })
+
+        contentEl.createEl('a', {
+            cls: 'community-link',
+            text: 'Community',
+            attr: { href: 'https://community.aiocean.io/' }
+        })
+
         contentEl.createEl('p', {
             text: 'But now you have to create your first gate.'
         })
