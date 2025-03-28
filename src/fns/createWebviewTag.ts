@@ -6,9 +6,9 @@ const DEFAULT_URL = 'about:blank'
 const GOOGLE_URL = 'https://google.com'
 const OPEN_GATE_WEBVIEW_CLASS = 'open-gate-webview'
 
-export const createWebviewTag = (params: Partial<GateFrameOption>, onReady?: () => void): WebviewTag => {
-    // Create a new webview tag
-    const webviewTag = document.createElement('webview') as unknown as WebviewTag
+export const createWebviewTag = (params: Partial<GateFrameOption>, onReady?: () => void, parentDoc?: Document): WebviewTag => {
+    // Create a new webview tag using the parent document context
+    const webviewTag = (parentDoc || document).createElement('webview') as unknown as WebviewTag
 
     // Set attributes for the webview tag
     webviewTag.setAttribute('partition', 'persist:' + params.profileKey)
