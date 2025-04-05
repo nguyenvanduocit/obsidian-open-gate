@@ -5,6 +5,7 @@ import { createIframe } from './fns/createIframe'
 import { clipboard } from 'electron'
 import WebviewTag = Electron.WebviewTag
 import { GateFrameOption } from './GateOptions'
+import { callbackify } from 'util'
 
 export class GateView extends ItemView {
     private readonly options: GateFrameOption
@@ -12,6 +13,7 @@ export class GateView extends ItemView {
     private readonly useIframe: boolean = false
     private frameReadyCallbacks: Function[]
     private isFrameReady: boolean = false
+    private frameDoc: Document
 
     constructor(leaf: WorkspaceLeaf, options: GateFrameOption) {
         super(leaf)
@@ -50,25 +52,47 @@ export class GateView extends ItemView {
         this.contentEl.empty()
         this.contentEl.addClass('open-gate-view')
 
-        const onReady = () => {
-            if (!this.isFrameReady) {
-                this.isFrameReady = true
-                this.frameReadyCallbacks.forEach((callback) => callback())
+        this.frameDoc = this.contentEl.doc
+        this.createFrame()
+        }
+
+        private createFrame(): void {
+            const onReady = () => {
+                if(!this.isFrameReady){
+                    this.isFrameReady = true
+                    this.frameReadyCallbacks.forEach((callback) => callback())
+                }
             }
+
+            if(this.useIframe){
+                this.frame = createIframe(this.options, onReady)
+            }else{
+                this.frame = createWebviewTag(this.options, onReady, this.frameDoc)
+
+                this.frame.addEventListener('destroyed', () => {
+
+                    if(this.frameDoc != this.contentEl.doc){
+                        if(this.frame){
+                            this.frame.remove()
+                        }
+                        this.frameDoc = this.contentEl.doc
+                        this.createFrame()
+                    }
+                })
+            }
+ 
+            this.contentEl.appendChild(this.frame as unknown as HTMLElement)
         }
 
-        if (this.useIframe) {
-            this.frame = createIframe(this.options, onReady)
-        } else {
-            this.frame = createWebviewTag(this.options, onReady)
-        }
 
-        this.contentEl.appendChild(this.frame as unknown as HTMLElement)
-    }
 
     onunload(): void {
-        this.frame.remove()
+
+        if(this.frame){
+            this.frame.remove()
+        }
         super.onunload()
+
     }
 
     onPaneMenu(menu: Menu, source: string): void {
