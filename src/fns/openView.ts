@@ -2,14 +2,16 @@ import { Workspace, WorkspaceLeaf } from 'obsidian'
 import { GateFrameOptionType } from '../GateOptions'
 
 export const openView = async (workspace: Workspace, id: string, position?: GateFrameOptionType): Promise<WorkspaceLeaf> => {
-    let leaf: WorkspaceLeaf
     let leafs = workspace.getLeavesOfType(id)
     if (leafs.length > 0) {
         workspace.revealLeaf(leafs[0])
         return leafs[0]
     }
 
-    leaf = await createView(workspace, id, position)
+    const leaf = await createView(workspace, id, position)
+    if (!leaf) {
+        throw new Error(`Failed to create view with id: ${id}`)
+    }
     workspace.revealLeaf(leaf)
 
     return leaf
@@ -20,8 +22,8 @@ export const isViewExist = (workspace: Workspace, id: string): boolean => {
     return leafs.length > 0
 }
 
-const createView = async (workspace: Workspace, id: string, position?: GateFrameOptionType) => {
-    let leaf: WorkspaceLeaf | undefined
+const createView = async (workspace: Workspace, id: string, position?: GateFrameOptionType): Promise<WorkspaceLeaf | undefined> => {
+    let leaf: WorkspaceLeaf | null = null
     switch (position) {
         case 'left':
             leaf = workspace.getLeftLeaf(false)
@@ -35,6 +37,9 @@ const createView = async (workspace: Workspace, id: string, position?: GateFrame
             break
     }
 
-    await leaf?.setViewState({ type: id, active: true })
-    return leaf
+    if (leaf) {
+        await leaf.setViewState({ type: id, active: true })
+        return leaf
+    }
+    return undefined
 }
