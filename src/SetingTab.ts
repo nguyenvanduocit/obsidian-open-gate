@@ -90,14 +90,14 @@ export class SettingTab extends PluginSettingTab {
             .setDesc('@duocdev')
             .addButton((button) => {
                 button.setCta()
-                button.setButtonText('Follow for update').onClick(() => {
-                    window.open('https://twitter.com/duocdev')
+                button.setButtonText('Join Community').onClick(() => {
+                    window.open('https://community.aiocean.io/')
                 })
             })
             .addButton((button) => {
                 button.setCta()
-                button.setButtonText('Bug report').onClick(() => {
-                    window.open('https://aiocean.atlassian.net/servicedesk/customer/portal/4')
+                button.setButtonText('Follow for update').onClick(() => {
+                    window.open('https://twitter.com/duocdev')
                 })
             })
             .addButton((button) => {
