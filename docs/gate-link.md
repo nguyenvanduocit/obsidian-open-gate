@@ -10,7 +10,7 @@ This feature allows you to create a link that opens a URL within the gate view o
 
 Please notice that the URL must be encoded. You can use [this tool](https://www.urlencoder.org/) to encode your URL.
 
-You may want to read [Gate Options](gate-options.md) to learn more about the options you can use. Of course, the are no space for custom css or javascript in the gate view.
+You may want to read [Gate Options](gate-options.md) to learn more about the options you can use. Of course, there is no space for custom CSS or JavaScript in the gate view.
 
 ## Editor context menu
 
