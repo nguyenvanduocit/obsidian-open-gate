@@ -179,7 +179,7 @@ export default class OpenGatePlugin extends Plugin {
     async removeGate(gateId: string) {
         if (!this.settings.gates[gateId]) {
             new Notice('Gate not found')
-            return
+            return // Early exit if gate doesn't exist
         }
 
         const gate = this.settings.gates[gateId]
