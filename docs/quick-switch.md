@@ -1,6 +1,6 @@
 # Quick switch
 
-You dont want every gates to show up in the left sidebar. 
+You don’t want every gate to show up in the left sidebar.
 
 You will turn off the "Ribbon" options of the gates. Then how to access them quickly? We have two ways to do that.
 
