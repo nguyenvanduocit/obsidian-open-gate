@@ -5,6 +5,7 @@ import { GateFrameOption } from '../GateOptions'
 const DEFAULT_URL = 'about:blank'
 const GOOGLE_URL = 'https://google.com'
 const OPEN_GATE_WEBVIEW_CLASS = 'open-gate-webview'
+const DEFAULT_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
 
 export const createWebviewTag = (params: Partial<GateFrameOption>, onReady?: () => void, parentDoc?: Document): WebviewTag => {
     // Create a new webview tag using the parent document context
@@ -17,10 +18,8 @@ export const createWebviewTag = (params: Partial<GateFrameOption>, onReady?: () 
     webviewTag.setAttribute('allowpopups', 'true')
     webviewTag.addClass(OPEN_GATE_WEBVIEW_CLASS)
 
-    // Set user agent if provided
-    if (params.userAgent && params.userAgent !== '') {
-        webviewTag.setAttribute('useragent', params.userAgent)
-    }
+    // Set user agent (use default Chrome UA if not provided to avoid bot detection)
+    webviewTag.setAttribute('useragent', params.userAgent || DEFAULT_USER_AGENT)
 
     webviewTag.addEventListener('dom-ready', async () => {
         // Set zoom factor if provided
