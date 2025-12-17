@@ -125,6 +125,45 @@ Update Open Gate to version <version> from Obsidian Community Plugins.
 <Link to release>"
 ```
 
+### 11. Post to Obsidian Discourse Forum (Optional)
+
+Announce the release on the Obsidian community forum:
+
+```bash
+# Open browser with pre-filled post (no API key needed!)
+./scripts/open-discourse-post.sh <version>
+```
+
+**What it does:**
+- Fetches release notes from GitHub
+- Opens browser with pre-filled title and content
+- Copies content to clipboard (backup)
+- You just click "Create Topic"!
+
+**Steps after running:**
+1. Browser opens to forum new topic page
+2. Review the pre-filled title and content
+3. Make any edits you want
+4. Click "Create Topic"
+5. Done! ✅
+
+**Why this approach?**
+- No API key setup needed
+- Works with any Discourse forum
+- You maintain full control over the post
+- Simple and reliable
+
+**Example output:**
+```
+📥 Fetching release notes from GitHub...
+📝 Opening Discourse Forum
+✅ Steps to complete:
+  1. Review the title and content
+  2. Make any edits you want
+  3. Click 'Create Topic'
+📋 The post content has been copied to your clipboard (backup)
+```
+
 ## Quick Reference
 
 **Files that need version updates:**
