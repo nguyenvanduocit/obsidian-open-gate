@@ -1,0 +1,9 @@
+# Discourse Forum Configuration
+# This file stores your plugin's forum thread URL
+
+# Your plugin's main forum topic URL
+# Set this to your existing announcement thread to post updates as replies
+DISCOURSE_TOPIC_URL="https://forum.obsidian.md/t/opengate-embed-any-website-to-obsidian/49522"
+
+# Leave empty to create new topics instead
+# DISCOURSE_TOPIC_URL=""

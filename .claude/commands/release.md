@@ -127,41 +127,64 @@ Update Open Gate to version <version> from Obsidian Community Plugins.
 
 ### 11. Post to Obsidian Discourse Forum (Optional)
 
-Announce the release on the Obsidian community forum:
+Announce the release on the Obsidian community forum by replying to your plugin's thread:
 
 ```bash
-# Open browser with pre-filled post (no API key needed!)
-./scripts/open-discourse-post.sh <version>
+# Reply to your plugin thread (configured in release skill)
+./scripts/post-to-discourse.sh <version>
+
+# Or specify a different topic URL
+./scripts/post-to-discourse.sh <version> https://forum.obsidian.md/t/your-topic/12345
+
+# Create a new topic instead
+./scripts/post-to-discourse.sh <version> ''
 ```
+
+**Configuration:**
+Your plugin's forum thread is configured in `.discourse-config` (in project root):
+```bash
+DISCOURSE_TOPIC_URL="https://forum.obsidian.md/t/opengate-embed-any-website-to-obsidian/49522"
+```
+
+**Note:**
+- The posting script lives in `~/.claude/skills/release/` (reusable across projects)
+- The config file lives in your project root (project-specific)
+- The wrapper script at `scripts/post-to-discourse.sh` calls the skill script
 
 **What it does:**
 - Fetches release notes from GitHub
-- Opens browser with pre-filled title and content
+- Opens browser to your plugin's forum thread
+- Pre-fills a reply with the release announcement
 - Copies content to clipboard (backup)
-- You just click "Create Topic"!
+- You just review and click "Reply"!
 
 **Steps after running:**
-1. Browser opens to forum new topic page
-2. Review the pre-filled title and content
-3. Make any edits you want
-4. Click "Create Topic"
-5. Done! ✅
+1. Browser opens to your plugin's forum thread
+2. Scroll to the reply box (bottom of page)
+3. Review the pre-filled content
+4. Make any edits you want
+5. Click "Reply"
+6. Done! ✅
 
 **Why this approach?**
-- No API key setup needed
-- Works with any Discourse forum
-- You maintain full control over the post
-- Simple and reliable
+- ✅ No API key setup needed
+- ✅ Updates your existing plugin thread (better than creating new topics)
+- ✅ You maintain full control over the post
+- ✅ Simple and reliable
+- ✅ Works with any Discourse forum
 
 **Example output:**
 ```
 📥 Fetching release notes from GitHub...
-📝 Opening Discourse Forum
+✅ Will reply to topic ID: 49522
+📝 Opening Reply Composer
 ✅ Steps to complete:
-  1. Review the title and content
-  2. Make any edits you want
-  3. Click 'Create Topic'
+  1. Scroll to the bottom (reply box)
+  2. Review the pre-filled content
+  3. Make any edits you want
+  4. Click 'Reply'
 📋 The post content has been copied to your clipboard (backup)
+🔗 Topic URL: https://forum.obsidian.md/t/49522
 ```
 
 ## Quick Reference
