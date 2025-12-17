@@ -14,9 +14,7 @@ export const createWebviewTag = (params: Partial<GateFrameOption>, onReady?: () 
     webviewTag.setAttribute('partition', 'persist:' + params.profileKey)
     webviewTag.setAttribute('src', params.url ?? DEFAULT_URL)
     webviewTag.setAttribute('httpreferrer', params.url ?? GOOGLE_URL)
-    webviewTag.setAttribute('crossorigin', 'anonymous')
     webviewTag.setAttribute('allowpopups', 'true')
-    webviewTag.setAttribute('disablewebsecurity', 'true')
     webviewTag.addClass(OPEN_GATE_WEBVIEW_CLASS)
 
     // Set user agent if provided
